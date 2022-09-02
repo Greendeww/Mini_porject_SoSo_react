@@ -27,6 +27,7 @@ function Form(){
         if(post.title.trim() === "" || post.imageUrl.trim() === ""){
             return alert("모든 항목을 입력해주세요!")};
             dispatch(createPost({...post, count:0}))
+            navigate('/')
     }
 
     return(
