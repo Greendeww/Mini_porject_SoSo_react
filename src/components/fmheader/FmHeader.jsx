@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const FmHeader = () => {
   const navigate = useNavigate();
 
   return (
@@ -15,14 +15,13 @@ const Header = () => {
         SoSo
       </StLogo>
         <StHeaderBox>
-            <StButton onClick={() => {navigate("/auth/post")}}>게시물 작성</StButton>
       <p>로그아웃</p>
       </StHeaderBox>
     </HeaderContainer>
   );
 };
 
-export default Header;
+export default FmHeader;
 
 const HeaderContainer = styled.div`
   width: calc(100%-0px);
