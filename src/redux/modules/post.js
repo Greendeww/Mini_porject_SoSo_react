@@ -24,8 +24,9 @@ export const postSlice = createSlice({
   initialState,
   reducers:{
     createPost(state,action){
-        state.post.push(action.payload);
+        state.users.push(action.payload);
         axios.post("http://localhost:3001/post",action.payload)
+        .then((response) => response.data);
     }
   }
 });
