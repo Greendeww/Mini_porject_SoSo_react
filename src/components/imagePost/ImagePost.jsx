@@ -17,12 +17,11 @@ console.log(post)
                 <StImgBoxLike>❤️</StImgBoxLike>
             </StImgBox>
             <StLikeBox>
-                <h4 onClick={() => {navigate('/detail/'+post.id)}}>{post.title}</h4>
+                <Detailpg onClick={() => {navigate('/detail/'+post.id)}}>{post.title}</Detailpg>
                 <span>❤️{post.count}</span>
             </StLikeBox>
         </>
     )
-
 }
 
 const StImgBox = styled.div`
@@ -60,5 +59,12 @@ const StLikeBox = styled.div`
     justify-content: end;
     align-items: center;
     padding:  0px 10px;
+`
+
+const Detailpg = styled.h4`
+   &:hover{
+   color: blue; 
+   cursor: pointer;
+   }
 `
 export default ImagePost
