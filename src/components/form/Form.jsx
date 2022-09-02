@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../redux/modules/post"
-
+import nextId from "react-id-generator";
 
 
 function Form(){
@@ -10,9 +10,11 @@ function Form(){
     const initialState = {
         title:"",
         imageUrl: "",
-        count:0
+        count:0,
+        id:0
     }
 
+    const comId = nextId();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [post, setPost] = useState(initialState);
@@ -26,7 +28,7 @@ function Form(){
         e.preventDefault();
         if(post.title.trim() === "" || post.imageUrl.trim() === ""){
             return alert("모든 항목을 입력해주세요!")};
-            dispatch(createPost({...post, count:0}))
+            dispatch(createPost({...post, count:0, id:comId}))
             navigate('/')
     }
 

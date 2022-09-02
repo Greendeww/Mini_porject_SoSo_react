@@ -1,20 +1,35 @@
-import React from 'react'
+import ImagePost from '../imagePost/ImagePost'
 import styled from 'styled-components'
 import {useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useEffect } from "react";
+import { useSelector } from 'react-redux';
+import { _getPost } from '../../redux/modules/post';
+
 const HomeContents = () => {
 
+  const dispatch = useDispatch(); 
   const navigate = useNavigate();
-    
+  
+  const {isLoading, error, post} = useSelector((state) => state.post)
+//   console.log(post)  
+
+  useEffect(() => {
+    dispatch(_getPost());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <div>로딩중....</div>;
+  }
+
+  if(error) {
+    return <div>{error.message}</div>;
+  }
+
   return (
     <Stcontainer>
         <StConBox>
-            <StImgBox>
-                <StImg importance="auto" src="" alt="" />
-                <StImgBoxLike>❤️</StImgBoxLike>
-            </StImgBox>
-            <StLikeBox>
-                <span>❤️ 1</span>
-            </StLikeBox>
+            {post.map((post) => (<ImagePost post={post} key={post.id}/>))}
         </StConBox>
     </Stcontainer>
   )
@@ -27,7 +42,9 @@ const Stcontainer = styled.div`
 
 const StConBox = styled.div`
     width: 250px;
-    
+    flex-wrap: wrap;
+    display: flex;
+    gap: 15px;
 `
 const StImgBox = styled.div`
     width: 100%;

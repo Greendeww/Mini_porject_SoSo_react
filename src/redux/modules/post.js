@@ -26,7 +26,22 @@ export const postSlice = createSlice({
     createPost(state,action){
         state.post.push(action.payload);
         axios.post("http://localhost:3001/post",action.payload)
-        // .then((response) => response.data);
+        .then((response) => response.data);
+    }
+  },
+  extraReducers: {
+    [_getPost.pending] : (state) => {
+        state.isLoading = true;
+    },
+    [_getPost.fulfilled] : (state, action) => {
+        state.isLoading = false;
+        state.post = action.payload;
+        console.log(state.post)
+    },
+    [_getPost.rejected] : (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        console.log(state.error)
     }
   }
 });
