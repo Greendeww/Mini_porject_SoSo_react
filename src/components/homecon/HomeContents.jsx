@@ -1,12 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useState } from 'react';
+import HomeConModal from '../modal/HomeConModal';
 const HomeContents = () => {
-  return (
-    <Stcontainer>
-        <StConBox>
-            <StImgBox>
+    const [isOpen,setIsOpen] = useState(false)
+    const onClickButton = () => {
+        setIsOpen(true)
+    }
+    console.log(isOpen)
+    return (
+        <>
+        {isOpen ===true ?<HomeConModal open = {isOpen} onClose  = {() =>{
+            setIsOpen(false)
+        }}/>:null}
+        <StConBox >
+            <StImgBox onClick={
+            onClickButton}>
                 <ImageSize>
-                <StImg importance="auto" src="https://i.pinimg.com/564x/d9/c8/25/d9c8256448c3b7c1f8dc190264b1283c.jpg" alt="" />
+                    <StImg src="https://i.pinimg.com/564x/d9/c8/25/d9c8256448c3b7c1f8dc190264b1283c.jpg" alt="" />
                 </ImageSize>
                 <StImgBoxLike>❤️</StImgBoxLike>
             </StImgBox>
@@ -14,14 +25,12 @@ const HomeContents = () => {
                 <span>❤️ 1</span>
             </StLikeBox>
         </StConBox>
-    </Stcontainer>
-  )
+        </>
+    )
 }
 
 export default HomeContents
-const Stcontainer = styled.div`
-    padding: 30px;
-`
+
 
 const StConBox = styled.div`
    border-radius: 15px;
@@ -64,5 +73,4 @@ const StLikeBox = styled.div`
     display: flex;
     justify-content: end;
     align-items: center;
-    padding:  0px 10px;
 `
