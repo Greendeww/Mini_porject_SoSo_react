@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../redux/modules/post"
@@ -58,6 +58,7 @@ function Form(){
             dispatch(createPost({...post, count:0, id:comId, imageUrl:[...imgBase64]}))
             navigate('/')
     }
+
     console.log(post)
     return(
         <>

@@ -40,6 +40,10 @@ function DetailPost(){
                     // let postld = {...detailPost, count:detailPost.count +1}
                     dispatch(likePost({...detailPost, count: detailPost.count+1}))}}>❤️</button>
                 <span>{detailPost.count}</span>
+                <div>
+                    <button>삭제하기</button>
+                    <button>수정하기</button>
+                </div>
            </div> 
         </div>   
         </>
