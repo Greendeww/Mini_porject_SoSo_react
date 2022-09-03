@@ -27,6 +27,11 @@ export const postSlice = createSlice({
         state.post.push(action.payload);
         axios.post("http://localhost:3001/post",action.payload)
         .then((response) => response.data);
+    },
+    likePost(state, action){
+       let index = state.post.findIndex(post => post.id === action.payload.id);
+       state.post[index].count +=1;
+       axios.patch(`http://localhost:3001/post/${action.payload.id}`,action.payload)
     }
   },
   extraReducers: {
@@ -46,5 +51,5 @@ export const postSlice = createSlice({
   }
 });
 
-export const {createPost} = postSlice.actions;
+export const {createPost,likePost} = postSlice.actions;
 export default postSlice.reducer;

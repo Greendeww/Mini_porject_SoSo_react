@@ -15,7 +15,7 @@ const Header = () => {
         SoSo
       </StLogo>
         <StHeaderBox>
-            <StButton onClick={() => {navigate("/auth/post")}}>게시물 작성</StButton>
+            <StButton onClick={() => {navigate("/post")}}>게시물 작성</StButton>
       <p>로그아웃</p>
       </StHeaderBox>
     </HeaderContainer>
