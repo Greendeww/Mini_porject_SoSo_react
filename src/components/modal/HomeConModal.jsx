@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useNavigate } from "react-router-dom";
 const HomeConModal = ({onClose}) => {
-    const handleClose = () => {
-        onClose?.();
-    }
+    const navigate = useNavigate();
     return (
         <StModal >
             <StModalBox>
@@ -12,7 +11,7 @@ const HomeConModal = ({onClose}) => {
                         <h1>상세페이지</h1>
                         <div>
                         <StButton>수정하기</StButton>
-                        <StButton onClick={handleClose}>이전으로</StButton>
+                        <StButton onClick={() => {navigate("/")}}>이전으로</StButton>
                         </div>
                     </StTitButton>
                     <StImgBox>

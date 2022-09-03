@@ -1,30 +1,28 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useState } from 'react';
-import HomeConModal from '../modal/HomeConModal';
+
+
+// import HomeConModal from '../modal/HomeConModal';
+import { useNavigate } from "react-router-dom";
 const HomeContents = () => {
-    const [isOpen,setIsOpen] = useState(false)
-    const onClickButton = () => {
-        setIsOpen(true)
-    }
-    console.log(isOpen)
+    const navigate = useNavigate();
+    
+
     return (
         <>
-        {isOpen ===true ?<HomeConModal open = {isOpen} onClose  = {() =>{
-            setIsOpen(false)
-        }}/>:null}
-        <StConBox >
-            <StImgBox onClick={
-            onClickButton}>
-                <ImageSize>
-                    <StImg src="https://i.pinimg.com/564x/d9/c8/25/d9c8256448c3b7c1f8dc190264b1283c.jpg" alt="" />
-                </ImageSize>
-                <StImgBoxLike>❤️</StImgBoxLike>
-            </StImgBox>
-            <StLikeBox>
-                <span>❤️ 1</span>
-            </StLikeBox>
-        </StConBox>
+            <StConBox >
+                <StImgBox onClick={
+                    navigate("/ditail")}>
+                    <ImageSize>
+                        <StImg src="https://i.pinimg.com/564x/d9/c8/25/d9c8256448c3b7c1f8dc190264b1283c.jpg" alt="" />
+                    </ImageSize>
+                    <StImgBoxLike>❤️</StImgBoxLike>
+                </StImgBox>
+                <StLikeBox>
+                
+                    <span>❤️ 1</span>
+                </StLikeBox>
+            </StConBox>
         </>
     )
 }

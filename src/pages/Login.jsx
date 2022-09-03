@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link, Outlet, useLocation } from "react-router-dom";
 const Login = () => {
+    const location = useLocation();
     return (
         <Back>
         <StLoginContainer>
@@ -17,6 +19,9 @@ const Login = () => {
                 <p>아직 회원이 아니신가요?</p>
             </StInputBox>
             <StButton>로그인</StButton>
+            <Link to="/detail" state={{ background: location }}>
+                        here <Outlet />
+                    </Link>
         </StLoginContainer>
         </Back>
     )
