@@ -5,10 +5,10 @@ import styled from "styled-components";
 
 
 function ImagePost({post}){
-console.log(post)
+// console.log(post)
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    console.log(post.ImageUrl)
+    // console.log(post.ImageUrl)
 
     return(
         <>

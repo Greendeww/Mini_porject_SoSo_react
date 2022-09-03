@@ -8,8 +8,6 @@ const Detail = () => {
     <>
       <Header/>
       <DetailPost/>
-      <h1>이미지 연습</h1>
-      <Image/>
     </>
     
   )
