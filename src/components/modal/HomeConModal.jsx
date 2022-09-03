@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useNavigate } from "react-router-dom";
-const HomeConModal = ({onClose}) => {
-    const navigate = useNavigate();
+import { Link } from "react-router-dom";
+const HomeConModal = () => {
+
     return (
         <StModal >
             <StModalBox>
@@ -10,8 +10,11 @@ const HomeConModal = ({onClose}) => {
                     <StTitButton >
                         <h1>상세페이지</h1>
                         <div>
-                        <StButton>수정하기</StButton>
-                        <StButton onClick={() => {navigate("/")}}>이전으로</StButton>
+                            <StButton>수정하기</StButton>
+                            <Link to="/">
+                            <StButton >이전으로</StButton>
+                            </Link>
+                            
                         </div>
                     </StTitButton>
                     <StImgBox>
@@ -78,15 +81,15 @@ const StButton = styled.button`
         color:#000
     }
     `
-    const StTitName = styled.div`
+const StTitName = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     `
-    const StImgBox = styled.div`
+const StImgBox = styled.div`
         margin: 0 auto;
     `
-    const StCommentBox = styled.div`
+const StCommentBox = styled.div`
         display: flex;
         justify-content: space-between;
     `

@@ -1,23 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
-
-
+import { Link, Outlet, useLocation } from "react-router-dom";
 // import HomeConModal from '../modal/HomeConModal';
 import { useNavigate } from "react-router-dom";
 const HomeContents = () => {
     const navigate = useNavigate();
-    
+    const location = useLocation();
 
     return (
         <>
             <StConBox >
-                <StImgBox onClick={
-                    navigate("/ditail")}>
+            <Link to="/detail" state={{ background: location }}>
+        
+                <StImgBox>
                     <ImageSize>
                         <StImg src="https://i.pinimg.com/564x/d9/c8/25/d9c8256448c3b7c1f8dc190264b1283c.jpg" alt="" />
                     </ImageSize>
                     <StImgBoxLike>❤️</StImgBoxLike>
                 </StImgBox>
+                <Outlet />
+      </Link>
                 <StLikeBox>
                 
                     <span>❤️ 1</span>
