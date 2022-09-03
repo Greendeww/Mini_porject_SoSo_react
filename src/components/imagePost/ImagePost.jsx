@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
+import { useState } from "react";
 import styled from "styled-components";
-
+import HomeConModal from "../modal/HomeConModal";
 
 
 function ImagePost({post}){
@@ -9,15 +10,21 @@ function ImagePost({post}){
     const navigate = useNavigate();
     const dispatch = useDispatch();
     // console.log(post.ImageUrl)
+    const [isOpen,setIsOpen] = useState(false)
+    const onClickButton = () => {
+        setIsOpen(true)
+    }
 
     return(
-        <>
+        <>  {isOpen ===true ?<HomeConModal open = {isOpen} onClose  = {() =>{
+            setIsOpen(false)
+             }}/>:null}
             <StImgBox key={post.id }>
                 <StImg src={post.imageUrl}/>
                 <StImgBoxLike>❤️</StImgBoxLike>
             </StImgBox>
             <StLikeBox>
-                <Detailpg onClick={() => {navigate('/detail/'+post.id)}}>{post.title}</Detailpg>
+                <Detailpg onClick={() => onClickButton()}>{post.title}</Detailpg>
                 <span>❤️{post.count}</span>
             </StLikeBox>
         </>

@@ -32,7 +32,6 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   padding: 20px;
   background-color: #fff;
-  margin-bottom: 50px;
 `;
 const StHeaderBox= styled.div`
   display: flex;
@@ -52,5 +51,10 @@ const StButton = styled.button`
     color: #fff;
     border-radius: 10px;
     cursor: pointer;
+    transition: all 0.3s;
+    :hover{
+        background-color: #fff;
+        color:#000
+    }
     
 `
