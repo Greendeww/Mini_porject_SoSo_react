@@ -14,7 +14,7 @@ function Form(){
 
 
     const handleChangerFile = (e) => {
-        console.log(e.target.files);
+        // console.log(e.target.files);
         setImgFile(e.target.files);
         setImgBase64([]);
         for(let i=0; i<e.target.files.length; i++){
