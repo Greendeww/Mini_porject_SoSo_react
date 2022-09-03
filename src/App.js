@@ -1,7 +1,5 @@
 import "../src/style.css";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Main } from "./Main";
-import { Modal } from "./Modal";
 import AddForm from "./pages/AddForm";
 import Home from "./pages/Home";
 import Login from "./pages/Login"
