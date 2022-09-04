@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useState } from "react";
 import styled from "styled-components";
 import HomeConModal from "../modal/HomeConModal";
-
+import { likePost,hatePost } from '../../redux/modules/post'
 
 function ImagePost({post}){
 // console.log(post)
@@ -13,6 +13,19 @@ function ImagePost({post}){
     const [isOpen,setIsOpen] = useState(false)
     const onClickButton = () => {
         setIsOpen(true)
+    }
+
+    const [like, setLike] = useState(false);
+
+
+    const likeClick = () => {
+        if(like){
+            setLike(false)
+            dispatch(hatePost({...post, count: post.count-1}))
+        }else{
+            setLike(true)
+            dispatch(likePost({...post, count: post.count+1}))
+        }
     }
 
     return(
@@ -25,7 +38,15 @@ function ImagePost({post}){
             </StImgBox>
             <StLikeBox>
                 <Detailpg onClick={() => onClickButton()}>{post.title}</Detailpg>
-                <span>❤️{post.count}</span>
+                <span> <p> {like
+                        ? (<Like size="20px" style={{color:'red'}} bold onClick={likeClick}>
+                        ♥
+                      </Like>
+                        ) : (
+                      <Like size="20px" bold onClick={likeClick}>
+                        ♡
+                      </Like> 
+                        )} {post.count} </p></span>
             </StLikeBox>
         </>
     )
@@ -74,5 +95,9 @@ const Detailpg = styled.h4`
    color: blue; 
    cursor: pointer;
    }
+`
+const Like = styled.div`
+font-size : 30px;
+padding-top: 30px;
 `
 export default ImagePost

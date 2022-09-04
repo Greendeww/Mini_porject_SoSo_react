@@ -49,8 +49,6 @@ function Form(){
                 name="title"
                 type="text"
                 required
-                // value={title}
-                // onChange={(event) => onChangerHandler(event, setTitle)}
             />
 
             <label htmlFor="imgFile">
@@ -58,7 +56,6 @@ function Form(){
                 name="image"
                 type="file"
                 accept=".gif, .jpg, .png"
-                // onChange={uploadImage}
                 mutliple="multiple"
                 />
             </label>
