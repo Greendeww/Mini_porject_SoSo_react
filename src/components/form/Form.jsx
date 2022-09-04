@@ -4,79 +4,74 @@ import { useNavigate } from "react-router-dom";
 import { createPost } from "../../redux/modules/post"
 import nextId from "react-id-generator";
 import Image from "../image/Image";
-
+import axios from "axios";
 
 function Form(){
-    const [imgBase64, setImgBase64] = useState([]);
-    const [imgFile, setImgFile] = useState(null);
-    console.log(imgBase64)
-
-
-
-    const handleChangerFile = (e) => {
-        // console.log(e.target.files);
-        setImgFile(e.target.files);
-        setImgBase64([]);
-        for(let i=0; i<e.target.files.length; i++){
-            if(e.target.files[i]){
-                let reader = new FileReader();
-                reader.readAsDataURL(e.target.files[i]);
-                reader.onloadend = () => {
-                    const base64 = reader.result;
-                    if (base64) {
-                        let base64Sub = base64.toString()
-
-                        setImgBase64(imgBase64 => [...imgBase64,base64Sub]);
-                    }
-                }
-            }
-        }
-    }
-
-    const initialState = {
-        title:"",
-        imageUrl: "",
-        count:0,
-        id:0
-    }
-
-    const comId = nextId();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [post, setPost] = useState(initialState);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [title, setTitle] = useState();
     
 
-    const onChangerHandler = (e) => {
-        const {name, value} =e.target;
-        setPost({...post, [name]: value})
-    }
+    const onChangerHandler = (event,setState) => setState(event.target.value);
 
-    const onSubmitHandler = (e) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const onSubmitHandler = async (e) => {
         e.preventDefault();
-        if(post.title.trim() === ""){
-            return alert("모든 항목을 입력해주세요!")};
-            dispatch(createPost({...post, count:0, id:comId, imageUrl:[...imgBase64]}))
-            navigate('/')
-    }
 
-    console.log(post)
+        let files = e.target.image.files[0];
+        let title = e.target.title.value
+        console.log(e.target.title.value)
+        let formData = new FormData();
+
+
+        formData.append("title", title);
+        formData.append("imageUrl", files);
+
+        const postSurvey = await axios({
+            method: "POST",
+            url: 'http://54.180.31.216/api/auth/post',
+            mode:"cors",
+            header : {
+                "Content-Type": "multipart/form-data",
+            },
+            data: formData
+        });
+    };
+
     return(
-        <>
+     <>
+        <form className="add-form" onSubmit={onSubmitHandler}>
+        <div className="input-group">
             <div>
-                <form onSubmit={onSubmitHandler}>
-                    <p>이미지</p>
-                    <Image imgBase64={imgBase64} />
-                    <input type="file" id="file" onChange={handleChangerFile} mutliple="multiple"/>
-                    <div>
-                        <p>제목</p>
-                        <input type='text' placeholder="제목을 입력하세요" name="title" value={post.title} onChange={onChangerHandler}></input>
-                    </div>
-                    <button>추가하기</button>
-                    <button onClick={() => {navigate('/')}}>이전으로</button>
-                </form>
+            <input
+                placeholder="제목"
+                name="title"
+                type="text"
+                required
+                // value={title}
+                // onChange={(event) => onChangerHandler(event, setTitle)}
+            />
+
+            <label htmlFor="imgFile">
+                <input
+                name="image"
+                type="file"
+                accept=".gif, .jpg, .png"
+                // onChange={uploadImage}
+                mutliple="multiple"
+                />
+            </label>
             </div>
-        </>
+            <div>
+            <button type="submit">등록</button>
+            </div>
+        </div>
+        </form>
+
+    </>
     )
+   
 }
 
 export default Form;

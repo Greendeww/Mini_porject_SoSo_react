@@ -10,7 +10,7 @@ export const _getPost = createAsyncThunk(
     "post/getPost",
     async(payload, thunkApI) => {
         try {
-            const data = await axios.get("http://localhost:3001/post");
+            const data = await axios.get("http://54.180.31.216/api/auth/post");
             console.log(data)
             return thunkApI.fulfillWithValue(data.data);
         }catch(error){
@@ -25,7 +25,7 @@ export const postSlice = createSlice({
   reducers:{
     createPost(state,action){
         state.post.push(action.payload);
-        axios.post("http://localhost:3001/post",action.payload)
+        axios.post("http://54.180.31.216/api/auth/post",action.payload)
         .then((response) => response.data);
     },
     likePost(state, action){
