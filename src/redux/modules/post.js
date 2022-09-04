@@ -32,6 +32,21 @@ export const postSlice = createSlice({
        let index = state.post.findIndex(post => post.id === action.payload.id);
        state.post[index].count +=1;
        axios.patch(`http://localhost:3001/post/${action.payload.id}`,action.payload)
+    },
+    hatePost(state, action){
+        let index = state.post.findIndex(post => post.id === action.payload.id);
+        state.post[index].count -=1;
+        axios.patch(`http://localhost:3001/post/${action.payload.id}`,action.payload)
+     },
+    deletePost(state,action){
+        let index = state.post.findIndex(post => post.id === action.payload)
+        state.post.slice(index,1)
+        axios.delete(`http://localhost:3001/post/${action.payload}`, action.payload)
+    },
+    updatePost(state,action){
+        let index = state.post.findIndex(post => post.id === action.payload.id);
+        state.post.slice(index,1,action.payload)
+        axios.patch(`http://localhost:3001/post/${action.payload.id}`,action.payload)
     }
   },
   extraReducers: {
@@ -51,5 +66,5 @@ export const postSlice = createSlice({
   }
 });
 
-export const {createPost,likePost} = postSlice.actions;
+export const {createPost,likePost,deletePost,updatePost,hatePost} = postSlice.actions;
 export default postSlice.reducer;

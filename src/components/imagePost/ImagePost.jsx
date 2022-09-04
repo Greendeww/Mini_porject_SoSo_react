@@ -16,7 +16,7 @@ function ImagePost({post}){
     }
 
     return(
-        <>  {isOpen ===true ?<HomeConModal open = {isOpen} onClose  = {() =>{
+        <>  {isOpen ===true ?<HomeConModal post={post} open = {isOpen} onClose  = {() =>{
             setIsOpen(false)
              }}/>:null}
             <StImgBox key={post.id }>
@@ -32,7 +32,8 @@ function ImagePost({post}){
 }
 
 const StImgBox = styled.div`
-    width: 100%;
+ 
+    max-width:300px;
     height: 300px;
     background-color: #fff;
     border-radius: 10px;
@@ -58,14 +59,14 @@ const StImgBoxLike = styled.p`
     top: 5px;
 `
 const StLikeBox = styled.div`
-    width: 100%;
+    width: 300px;
     height: 40px;
     background-color: #fff;
     border-radius: 10px;
     display: flex;
     justify-content: end;
     align-items: center;
-    padding:  0px 10px;
+    /* padding:  0px 10px; */
 `
 
 const Detailpg = styled.h4`

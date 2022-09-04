@@ -1,26 +1,62 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-const HomeConModal = ({onClose}) => {
+import { deletePost } from '../../redux/modules/post'
+import PostModal from './PostModal'
+import { likePost,hatePost } from '../../redux/modules/post'
+
+const HomeConModal = ({onClose, post}) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleClose = () => {
         onClose?.();
     }
+
+    const [like, setLike] = useState(false);
+
+
+
+
+    const likeClick = () => {
+        if(like){
+            setLike(false)
+            dispatch(hatePost({...post, count: post.count-1}))
+        }else{
+            setLike(true)
+            dispatch(likePost({...post, count: post.count+1}))
+        }
+    }
+
+    
     return (
+        <>
+        
         <StModal >
             <StModalBox>
                 <div>
                     <StTitButton >
                         <h1>상세페이지</h1>
-                        <div>
-                        <StButton>수정하기</StButton>
+                        <div> 
+                        <StButton onClick={() => navigate('/detail/'+post.id)}>수정하기</StButton>
+                        <StButton onClick={() => {dispatch(deletePost(post.id)); window.location.reload();}}>삭제하기</StButton>
                         <StButton onClick={handleClose}>이전으로</StButton>
                         </div>
                     </StTitButton>
                     <StImgBox>
-                        <img src="https://i.pinimg.com/564x/d9/c8/25/d9c8256448c3b7c1f8dc190264b1283c.jpg" alt="" />
+                        <img src={post.imageUrl} alt="" />
                     </StImgBox>
                     <StTitName>
-                        <h1>제목/닉네임</h1>
-                        <p>❤️ 1</p>
+                        <h1>{post.title}</h1>
+                        <p> {like
+                        ? (<Like size="20px" style={{color:'red'}} bold onClick={likeClick}>
+                        ♥
+                      </Like>
+                        ) : (
+                      <Like size="20px" bold onClick={likeClick}>
+                        ♡
+                      </Like> 
+                        )} {post.count} </p>
                     </StTitName>
                 </div>
                 <div>
@@ -34,10 +70,13 @@ const HomeConModal = ({onClose}) => {
                 </div>
             </StModalBox>
         </StModal>
+    </>
     )
 }
 
 export default HomeConModal
+
+
 const StModal = styled.div`
   position: fixed;
   top: 0;
@@ -91,3 +130,6 @@ const StButton = styled.button`
         display: flex;
         justify-content: space-between;
     `
+    const Like = styled.div`
+    font-size : 30px;
+  `

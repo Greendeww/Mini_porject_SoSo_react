@@ -12,7 +12,7 @@ const HomeContents = () => {
     const dispatch = useDispatch(); 
     const navigate = useNavigate();
 
-    const {isLoading, error, post} = useSelector((state) => state.post)
+    const {isLoading, error, post} = useSelector((state) => state?.post)
     //   console.log(post)  
     
       useEffect(() => {
@@ -46,8 +46,9 @@ margin-bottom:1rem;
 background-color: white;
 // 줄바꿈 방지
 display:inline-block;
-min-width: 20%;
-
+min-width: 100%;
+width: 3000px;
+flex-wrap: wrap;
 `
 const StImgBox = styled.div`
 position: relative;
