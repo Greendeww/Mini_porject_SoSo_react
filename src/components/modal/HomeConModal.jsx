@@ -6,15 +6,14 @@ import { deletePost } from '../../redux/modules/post'
 import PostModal from './PostModal'
 import { likePost,hatePost } from '../../redux/modules/post'
 
-const HomeConModal = ({onClose, post}) => {
+const HomeConModal = ({onClose, post,like,setLike}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleClose = () => {
         onClose?.();
     }
 
-    const [like, setLike] = useState(false);
-
+    
 
 
 

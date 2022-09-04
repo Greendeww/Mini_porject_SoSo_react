@@ -10,7 +10,7 @@ export const _getPost = createAsyncThunk(
     "post/getPost",
     async(payload, thunkApI) => {
         try {
-            const data = await axios.get("http://54.180.31.216/api/auth/post");
+            const data = await axios.get("http://localhost:3001/post/");
             console.log(data)
             return thunkApI.fulfillWithValue(data.data);
         }catch(error){

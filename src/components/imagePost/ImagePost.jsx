@@ -29,7 +29,7 @@ function ImagePost({post}){
     }
 
     return(
-        <>  {isOpen ===true ?<HomeConModal post={post} open = {isOpen} onClose  = {() =>{
+        <>  {isOpen ===true ?<HomeConModal like={like} setLike={setLike} post={post} open = {isOpen} onClose  = {() =>{
             setIsOpen(false)
              }}/>:null}
             <StImgBox key={post.id }>

@@ -10,24 +10,27 @@ function Form(){
     const [imageUrl, setImageUrl] = useState(null);
     const [title, setTitle] = useState();
     
-
-    const onChangerHandler = (event,setState) => setState(event.target.value);
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+
+    const onChangeHandler = (event) => {
+        setTitle(event.target.value);
+        console.log(event.target)
+      };
+    
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
 
         let files = e.target.image.files[0];
-        let title = e.target.title.value
-        console.log(e.target.title.value)
+        // let title = e.target.title.value
         let formData = new FormData();
+        
 
-
-        formData.append("title", title);
+        formData.append("title", JSON.stringify(title));
         formData.append("imageUrl", files);
-
+        // console.log(formData.append)
         const postSurvey = await axios({
             method: "POST",
             url: 'http://54.180.31.216/api/auth/post',
@@ -36,7 +39,9 @@ function Form(){
                 "Content-Type": "multipart/form-data",
             },
             data: formData
+            
         });
+        console.log(postSurvey)
     };
 
     return(
@@ -48,7 +53,9 @@ function Form(){
                 placeholder="제목"
                 name="title"
                 type="text"
-                required
+                value={title||''}
+                onChange={onChangeHandler}
+                // required
             />
 
             <label htmlFor="imgFile">
