@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from "react-router-dom";
+import Comments from '../components/comments/Comments';
 const Detail = () => {
 
     return (
@@ -25,15 +26,8 @@ const Detail = () => {
                         <p>❤️ 1</p>
                     </StTitName>
                 </div>
-                <div>
-                    <StCommentBox>
-                        <input type="text" />
-                        <button>댓글달기</button>
-                    </StCommentBox>
-                    <div>
-                        <p>테스트 텍스트 입니다.</p>
-                    </div>
-                </div>
+                <Comments/>
+
             </StModalBox>
         </StModal>
     )
@@ -88,8 +82,4 @@ const StTitName = styled.div`
     `
 const StImgBox = styled.div`
         margin: 0 auto;
-    `
-const StCommentBox = styled.div`
-        display: flex;
-        justify-content: space-between;
     `

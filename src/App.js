@@ -4,7 +4,7 @@ import AddForm from "./pages/AddForm";
 import Home from "./pages/Home";
 import Login from "./pages/Login"
 import Sign from "./pages/Sign";
-import HomeConModal from "./components/modal/HomeConModal";
+import Detail from "./pages/Detail"
 function App() {
   const location = useLocation();
   const background = location.state && location.state.background;
@@ -14,7 +14,7 @@ function App() {
       {/* 백그라운드 객체가 없어도 렌더링 */}
       <Routes location={!background || location}>
         <Route path="/" element={<Home/>}>
-          {background && <Route path="detail" element={<HomeConModal/>} />}
+          {background && <Route path="/detail" element={<Detail/>} />}
           <Route path="/addform" element={<AddForm />} />
           <Route path="/login" element={<Login />} />
 
