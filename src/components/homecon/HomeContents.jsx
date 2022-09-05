@@ -1,45 +1,74 @@
-import React from 'react'
+import ImagePost from '../imagePost/ImagePost'
 import styled from 'styled-components'
+import {useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useEffect } from "react";
+import { useSelector } from 'react-redux';
+import { _getPost } from '../../redux/modules/post';
+
+
+
 const HomeContents = () => {
-  return (
-    <Stcontainer>
-        <StConBox>
-            <StImgBox>
-                <StImg importance="auto" src="" alt="" />
-                <StImgBoxLike>❤️</StImgBoxLike>
-            </StImgBox>
-            <StLikeBox>
-                <span>❤️ 1</span>
-            </StLikeBox>
+    const dispatch = useDispatch(); 
+    const navigate = useNavigate();
+
+    const {isLoading, error, post} = useSelector((state) => state?.post)
+      // console.log( useSelector((state) => state?.post))  
+    
+      useEffect(() => {
+        dispatch(_getPost());
+      }, [dispatch]);
+    
+      if (isLoading) {
+        return <div>로딩중....</div>;
+      }
+    
+      if(error) {
+        return <div>{error.message}</div>;
+      }
+    
+    return (
+        <>
+        <StConBox >
+             {post.map((post) => (<ImagePost post={post} key={post.id}/>))}
+
         </StConBox>
-    </Stcontainer>
-  )
+        </>
+    )
 }
 
 export default HomeContents
-const Stcontainer = styled.div`
-    padding: 30px;
-`
+
 
 const StConBox = styled.div`
-    width: 250px;
-    
+border-radius: 15px;
+margin-bottom:1rem;
+background-color: white;
+// 줄바꿈 방지
+display:inline-block;
+min-width: 100%;
+width: 3000px;
+flex-wrap: wrap;
 `
 const StImgBox = styled.div`
-    width: 100%;
-    height: 300px;
-    background-color: #fff;
-    border-radius: 10px;
-    position: relative;
-    padding: 0px 10px;
-    margin-bottom: 5px;
-`;
+position: relative;
+display: inline-flex;
+width: 100%;
+border-radius: 10px;
+overflow: hidden;
+    
+:hover {
+  cursor:pointer;
+  box-shadow: rgba(0,0,0,0.2) 0 0 10px 3px;
+}
+`
+const ImageSize = styled.div`
+min-width:22vw;
+`
 const StImg = styled.img`
-    border: 0;
-    height: auto;
-    max-width: 100%;
-    vertical-align: middle;
-    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `
 const StImgBoxLike = styled.p`
     position: absolute;
@@ -54,5 +83,4 @@ const StLikeBox = styled.div`
     display: flex;
     justify-content: end;
     align-items: center;
-    padding:  0px 10px;
 `

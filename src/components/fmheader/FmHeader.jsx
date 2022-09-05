@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const FmHeader = () => {
   const navigate = useNavigate();
 
   return (
@@ -15,14 +15,13 @@ const Header = () => {
         SoSo
       </StLogo>
         <StHeaderBox>
-            <StButton onClick={() => {navigate("/post")}}>게시물 작성</StButton>
       <p>로그아웃</p>
       </StHeaderBox>
     </HeaderContainer>
   );
 };
 
-export default Header;
+export default FmHeader;
 
 const HeaderContainer = styled.div`
   width: calc(100%-0px);
@@ -32,6 +31,7 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   padding: 20px;
   background-color: #fff;
+  margin-bottom: 50px;
 `;
 const StHeaderBox= styled.div`
   display: flex;
@@ -51,10 +51,5 @@ const StButton = styled.button`
     color: #fff;
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s;
-    :hover{
-        background-color: #fff;
-        color:#000
-    }
     
 `
