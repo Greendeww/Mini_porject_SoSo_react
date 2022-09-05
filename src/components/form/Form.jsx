@@ -26,7 +26,7 @@ function Form(){
             title:title
         }
         let files = e.target.image.files[0];
-        console.log(e.target.image.files[0])
+        console.log(e.target.image.files[0]);
         const json =JSON.stringify(req);
         let formData = new FormData();
 
