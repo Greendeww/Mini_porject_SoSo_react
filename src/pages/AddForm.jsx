@@ -1,8 +1,13 @@
 import React from 'react'
-import Header from '../components/layout/Header'
+import FmHeader from '../components/fmheader/FmHeader'
+import Form from '../components/form/Form'
+
 const AddForm = () => {
   return (
-    <Header/>
+    <>
+      <FmHeader/>
+      <Form/>
+    </>
   )
 }
 
