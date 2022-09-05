@@ -9,17 +9,19 @@ const Comments = () => {
     const dispatch = useDispatch()
     const [review, setReview] = useState({});
     let { id } = useParams();
+    // console.log(id)
     const comments = useSelector((state) => state.commentSlice);
-    console.log(comments)
+    // console.log(comments)
     const onChangeHandler = (event) => {
         const comm = event.target.value;
-        setReview({ ...review, id: nextId(), postId: id, commment: comm });
+        setReview({ ...review, id: nextId(), postId: id, comment: comm });
         console.log(review)
     };
     
-    // let commentList = comments.filter((comment) => {
-    //     return String(comment.post) === id;
-    // });
+    let commentList = comments.filter((comment) => {
+        return String(comment.postId) === id;
+        
+    });
 
     return (
         <>
@@ -34,7 +36,7 @@ const Comments = () => {
                     }}>댓글달기</button>
                 </StCommentBox>
                 <div>
-                    {comments.map((commet) => {
+                    {commentList.map((commet) => {
                         return <Com key={commet.id} ment={commet} />;
                     })}
                 </div>

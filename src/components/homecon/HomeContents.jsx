@@ -1,34 +1,48 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import {useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useEffect } from "react";
+import { useSelector } from 'react-redux';
+import { _getPost } from '../../redux/modules/postSlice';
+import { useParams } from "react-router-dom";
 // import HomeConModal from '../modal/HomeConModal';
 
 const HomeContents = () => {
 
     const location = useLocation();
 
+    const dispatch = useDispatch(); 
+    const navigate = useNavigate();
+    
+    const post = useSelector((state) => state.postSlice.post)
+      console.log(post)  
+
+      useEffect(() => {
+        dispatch(_getPost());
+      }, [dispatch]);
+    
     return (
         <>
-            <StConBox >
+         {post.map((posts) => {
+                return(
+                <StConBox key={posts.id} >
+                    <StImgBox>
+                    <Link to={"/detail/"+posts.id} state={{ background: location }}>
+                        <ImageSize>
+                            <StImg src={posts.imageUrl} />
+                        </ImageSize>
+                        <StImgBoxLike>❤️</StImgBoxLike>
+                        </Link>
+                    </StImgBox>
+                    <StLikeBox>
+                    <Detailpg>{posts.title}</Detailpg>
+                <span>❤️{posts.count}</span>
+                    </StLikeBox>
+                </StConBox>)
+            })}
             
-        
-                <StImgBox>
-                <Link to="/detail" state={{ background: location }}>
-                
-                    <ImageSize>
-                        <StImg src="https://i.pinimg.com/564x/d9/c8/25/d9c8256448c3b7c1f8dc190264b1283c.jpg" alt="" />
-                    </ImageSize>
-                    <StImgBoxLike>❤️</StImgBoxLike>
-                    </Link>
-                    
-
-                </StImgBox>
-      
-                <StLikeBox>
-                
-                    <span>❤️ 1</span>
-                </StLikeBox>
-            </StConBox>
         </>
     )
 }
@@ -77,4 +91,10 @@ const StLikeBox = styled.div`
     display: flex;
     justify-content: end;
     align-items: center;
+`
+const Detailpg = styled.h4`
+   &:hover{
+   color: blue; 
+   cursor: pointer;
+   }
 `

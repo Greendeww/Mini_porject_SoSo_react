@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import post from "../redux/modules/post"
+import postSlice from "./modules/postSlice"
 
 import commentSlice from "./modules/commentSlice";
 
@@ -7,7 +7,7 @@ const store = configureStore({
   reducer: {
    
     commentSlice: commentSlice.reducer,
-    post : post.reducer
+    postSlice: postSlice.reducer
   }
 });
 

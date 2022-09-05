@@ -3,14 +3,15 @@ import { useDispatch } from "react-redux/";
 import { updateComment } from "../../redux/modules/commentSlice"
 import styled from "styled-components";
 const Commentmodal = ({ ment, close }) => {
+  // console.log(ment)
   let dispatch = useDispatch();
   const initialState = {
     id: ment.id,
     comment:ment.comment
   };
-console.log(ment.comment)
+// console.log(ment.comment)
   const [ment1, setMent] = useState(initialState);
-  console.log(ment1)
+  // console.log(ment1)
   const [desc, setDesc] = useState(ment1.comment);
  
 
@@ -27,6 +28,7 @@ console.log(ment.comment)
                 type="text"
                 value={desc}
                 onChange={(e) => {
+                  console.log(e.target.value)
                   setDesc(e.target.value);
                 }}
               />
@@ -34,7 +36,7 @@ console.log(ment.comment)
             <Button
               className="btn btn-danger"
               onClick={() => {
-                dispatch(updateComment({ ...ment1,comment: desc }));
+                dispatch(updateComment({ ...ment,comment: desc }));
                 close();
               }}
             >

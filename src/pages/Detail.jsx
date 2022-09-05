@@ -1,9 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from "react-router-dom";
+import {useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useEffect } from "react";
+import { useSelector } from 'react-redux';
+import { _getPost } from '../redux/modules/postSlice';
 import Comments from '../components/comments/Comments';
+import { useParams } from 'react-router-dom';
 const Detail = () => {
+    const dispatch = useDispatch(); 
+    const navigate = useNavigate();
+    const {id} = useParams()
+    const posts = useSelector((state) => state.postSlice.post)
+    //   console.log(posts)  
 
+      useEffect(() => {
+        dispatch(_getPost());
+      }, [dispatch]);
+    //   새로고침시 화면 안뜸
+      let postt = posts.find((post) => {
+
+        return post.id === Number(id);
+      });
+    //   console.log(postt)
     return (
         <StModal >
             <StModalBox>
@@ -19,10 +39,10 @@ const Detail = () => {
                         </div>
                     </StTitButton>
                     <StImgBox>
-                        <img src="https://i.pinimg.com/564x/d9/c8/25/d9c8256448c3b7c1f8dc190264b1283c.jpg" alt="" />
+                        <img src={postt.imageUrl}/>
                     </StImgBox>
                     <StTitName>
-                        <h1>제목/닉네임</h1>
+                        <h1 >{postt.title}</h1>
                         <p>❤️ 1</p>
                     </StTitName>
                 </div>

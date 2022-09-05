@@ -1,33 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-
 // import GlobalLayout from "../../global/GlobalLayout";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 // import { diaryApi } from '../../redux/modules/postsSlice';
-
 import { useNavigate } from "react-router-dom";
-
 const Form = () => {
   const dispatch = useDispatch();
-
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState();
   const [fileImage, setFileImage] = useState("");
   const navigate = useNavigate();
-
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
   };
-
-
   const onChangeImg = (e) => {
     console.log(e.target.files);
     setImageUrl(e.target.files[0]);
     setFileImage(URL.createObjectURL(e.target.files[0]));
   };
-
   const onAddPosttButtonHandler = async () => {
     let req = {
       title: title,
@@ -35,26 +27,22 @@ const Form = () => {
     let json = JSON.stringify(req);
     const form = new FormData();
     //콘솔 추가
-
     const titleblob = new Blob([json], { type: "application/json" });
     form.append("title", titleblob);
     console.log(titleblob);
     form.append("imageUrl", imageUrl);
-
       const res = await axios.post(`$http://54.180.31.216/api/auth/post`, form, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       return res.data;
-    
     setTitle("");
     navigate("/");
   };
   const goBack = () => {
     navigate(-1);
   };
-
   return (
     <FormWrap id="addform">
       <label>제목</label>
@@ -66,7 +54,6 @@ const Form = () => {
         placeholder="제목을 작성해주세요."
       />
       <label>이미지</label>
-
       <input
         type="file"
         name="imageUrl"
@@ -81,9 +68,7 @@ const Form = () => {
     </FormWrap>
   );
 };
-
 export default Form;
-
 const FormWrap = styled.div`
   margin: 0 auto;
   margin-top: 40px;
@@ -94,9 +79,9 @@ const FormWrap = styled.div`
   flex-direction: column;
   gap: 10px;
   border-radius: 20px;
-  background-color: #90b4ce;
+  background-color: #90B4CE;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  color: #d8eefe;
+  color: #D8EEFE;
   label {
     /* border-bottom: 2px solid rgba(0, 0, 0, 0.7); */
     width: 100%;
@@ -144,7 +129,7 @@ const FormWrap = styled.div`
     font-weight: 700;
     transition: all 0.4s;
     border: none;
-    background-color: #3da9fc;
+    background-color: #3DA9FC;
     color: #fff;
     margin: 10px 0;
   }
@@ -155,7 +140,7 @@ const FormWrap = styled.div`
     transition: all 0.4s;
     :hover {
       transform: scale(1.2);
-      fill: #ef4565;
+      fill: #EF4565;
     }
   }
 `;

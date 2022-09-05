@@ -19,17 +19,9 @@ export const _getPost = createAsyncThunk(
     }
 );
 
-export const __addPost = createAsyncThunk("ADD_POST", async (form) => {
-  const res = await axios.post(`http://54.180.31.216/api/auth/post/api/posts`, form, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-  return res.data;
-});
 
 export const postSlice = createSlice({
-  name:"post",
+  name:"postSlice",
   initialState,
   reducers:{
     createPost(state,action){

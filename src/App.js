@@ -13,7 +13,7 @@ function App() {
       {/* 백그라운드 객체가 없어도 렌더링 */}
       <Routes >
         <Route path="/" element={<Home />}>
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
         <Route path="/post" element={<AddForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<Sign />} />
