@@ -11,7 +11,10 @@ root.render(
   <Provider store={store}>
 <Router>
     <App />
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   </Router>
   </Provider>
 );
