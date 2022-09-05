@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,7 +15,9 @@ const Header = () => {
         SoSo
       </StLogo>
         <StHeaderBox>
+          <Link to={"/post"}>
             <StButton>게시물 작성</StButton>
+            </Link>
       <p>로그아웃</p>
       </StHeaderBox>
     </HeaderContainer>

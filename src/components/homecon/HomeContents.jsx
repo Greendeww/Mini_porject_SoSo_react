@@ -20,7 +20,7 @@ const HomeContents = () => {
                     </ImageSize>
                     <StImgBoxLike>❤️</StImgBoxLike>
                     </Link>
-                    <Outlet />
+                    
 
                 </StImgBox>
       

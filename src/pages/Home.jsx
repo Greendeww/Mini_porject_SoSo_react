@@ -2,6 +2,7 @@ import React from "react";
 import HomeContents from "../components/homecon/HomeContents";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
+import { Outlet } from "react-router-dom";
 const Home = () => {
     return (
         <>
@@ -10,6 +11,8 @@ const Home = () => {
                 <HomeContents /> 
                 {/* map 함수 돌리실 곳 */}
             </Postcards>
+         <Outlet />
+            
         </>
     );
 };
