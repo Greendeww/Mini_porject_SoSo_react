@@ -13,7 +13,7 @@ const HomeContents = () => {
     const navigate = useNavigate();
 
     const {isLoading, error, post} = useSelector((state) => state?.post)
-    //   console.log(post)  
+      // console.log( useSelector((state) => state?.post))  
     
       useEffect(() => {
         dispatch(_getPost());

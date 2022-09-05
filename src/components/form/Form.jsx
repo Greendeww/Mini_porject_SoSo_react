@@ -22,27 +22,37 @@ function Form(){
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-
+        let req = {
+            title:title
+        }
         let files = e.target.image.files[0];
-        // let title = e.target.title.value
+        console.log(e.target.image.files[0])
+        const json =JSON.stringify(req);
         let formData = new FormData();
-        
 
-        formData.append("title", JSON.stringify(title));
+  
+        console.log(json)
+        const blob = new Blob([json], {type: "application/json"});
+        console.log(blob)
+        formData.append("title",blob);
         formData.append("imageUrl", files);
-        // console.log(formData.append)
-        const postSurvey = await axios({
-            method: "POST",
-            url: 'http://54.180.31.216/api/auth/post',
-            mode:"cors",
-            header : {
-                "Content-Type": "multipart/form-data",
-            },
-            data: formData
-            
+        console.log(formData)
+        console.log(files)
+        const res = await axios.post('http://54.180.31.216/api/auth/post',formData,{
+            headers:{
+                "Content-Type": "multipart/form",
+            }
         });
-        console.log(postSurvey)
-    };
+        navigate("/");
+        return res.data;
+        
+        // setTitle("");
+        
+      };
+            
+    
+            
+    ;
 
     return(
      <>
@@ -58,12 +68,13 @@ function Form(){
                 // required
             />
 
-            <label htmlFor="imgFile">
+            <label htmlFor="imageUrl">
                 <input
                 name="image"
                 type="file"
                 accept=".gif, .jpg, .png"
                 mutliple="multiple"
+                id="imageUrl"
                 />
             </label>
             </div>

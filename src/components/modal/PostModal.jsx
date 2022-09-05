@@ -9,26 +9,29 @@ import {updatePost} from '../../redux/modules/post'
 import { useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { _getPost } from '../../redux/modules/post';
+import axios from 'axios';
+import { bindActionCreators } from 'redux';
+import { _updatePost } from '../../redux/modules/post';
 
 function PostModal(){
     const initialState = {
+        id:0,
         title:"",
         imageUrl: "",
-        count:0,
-        id:0
+        
     }
 
     const navigate = useNavigate();
     let dispatch = useDispatch();
     const {id} = useParams();
     const [data,setData] = useState(initialState);
-    const [title,setTitle] = useState(data.title)
-    const [imgBase64, setImgBase64] = useState([]);
+    const [title,setTitle] = useState(data.title);
+    // const [imgBase64, setImgBase64] = useState([]);
     const [imgFile, setImgFile] = useState(null);
     
 
     const {isLoading, error, post} = useSelector((state) => state.post)
-    
+
 
     useEffect(() => {
         dispatch(_getPost());
@@ -43,52 +46,63 @@ function PostModal(){
       }
 
       const list = post.find(post => {
-        return String(post.id) === id
+        return (post.id) === Number(id)
     });
-
-    console.log(list)
-    const handleChangerFile = (e) => {
-        // console.log(e.target.files);
-        setImgFile(e.target.files);
-        setImgBase64([]);
-        for(let i=0; i<e.target.files.length; i++){
-            if(e.target.files[i]){
-                let reader = new FileReader();
-                reader.readAsDataURL(e.target.files[i]);
-                reader.onloadend = () => {
-                    const base64 = reader.result;
-                    if (base64) {
-                        let base64Sub = base64.toString()
-
-                        setImgBase64(imgBase64 => [...imgBase64,base64Sub]);
-                    }
-                }
-            }
-        }
-    }
     
-    const onSubmitHandler = (e) => {
+    const onUpdateHandler = async (e) => {
+        console.log(imgFile)
         e.preventDefault();
-        // if(post.title.trim() === ""){
-        //     return alert("모든 항목을 입력해주세요!")};
-            dispatch(updatePost({...list, imageUrl:[...imgBase64]}))
-            navigate('/')
-    }
+        let req = {
+           
+            title:title
+        }
+        // let files = e.target.image.files[0];
+        // console.log(e.target.image.files[0])
+        const json =JSON.stringify(req);
+        let formData = new FormData();
 
+        const blob = new Blob([json], {type: "application/json"});
+        // formData.append("title",blob);
+        // formData.append("id",blob);
+        formData.append("imageUrl", imgFile);
+        
+        console.log(formData)
+        const payload = {
+            id:id,
+            data:{
+                title:title,
+                imageUrl:formData
+            }
+           
+        }
+        // navigate("/");
+        dispatch(_updatePost(payload,id))
+        for(let value of formData.values()) {
+            console.log(value);
+            }
+      };
+      const onChangeHandler = (event) => {
+        setTitle(event.target.value);
+
+      };
+      const onChangeFileHandler = (event) => {
+        setImgFile(event.target.files[0]);
+        console.log(event.target.files[0])
+      };
 
     return (
-        <StModal onSubmit={onSubmitHandler} >
+        <StModal >
             <StModalBox>
                 <form >
                     <StTitButton >
                         <h1>수정페이지</h1>
                         <div>
-                        <StButton>수정하기</StButton>
+                        <StButton onClick={onUpdateHandler}>수정하기</StButton>
                         <StButton onClick={()=>navigate('/')}>이전으로</StButton>
                         </div>
                     </StTitButton>
                     <StImgBox>
-                    <div style={{width:'700px', height:"560px",marginTop:'30px',marginBottom:'50px', marginLeft:'60px',border:'2px solid black'}}>
+                    {/* <div style={{width:'700px', height:"560px",marginTop:'30px',marginBottom:'50px', marginLeft:'60px',border:'2px solid black'}}>
                             <div interval={null}>
                             {imgBase64.map((item) => {
                                 return(
@@ -102,15 +116,30 @@ function PostModal(){
                                 )
                             })}
                             </div>
-                    </div>
-                        <input type="file" id="file" onChange={handleChangerFile} mutliple="multiple"/>
+                    </div> */}
+                        <label htmlFor="imageUrl">
+                            <input
+                            name="image"
+                            type="file"
+                            accept=".gif, .jpg, .png"
+                            mutliple="multiple"
+                            id="imageUrl"
+                            onChange={onChangeFileHandler}
+                            />
+                        </label>
                     </StImgBox>
                     <StTitName>
                         <h1>
                             {list.title}
                         </h1>
-                        <input className="input" type="text" name="title" value={title}
-                         onChange={(e)=>{setTitle(e.target)}}/>
+                        <input
+                            placeholder="제목"
+                            name="title"
+                            type="text"
+                            value={title||''}
+                            onChange={onChangeHandler}
+                            // required
+                        />
                         <p>❤️ 2</p>
                     </StTitName>
                 </form>
