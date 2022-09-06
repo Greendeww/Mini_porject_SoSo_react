@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useSelector } from 'react-redux';
 import { _getPost } from '../redux/modules/postSlice';
 import Comments from '../components/comments/Comments';
 import { useParams } from 'react-router-dom';
-import { deletePost } from '../redux/modules/postSlice'
+import { deletePost,likePost,hatePost,_deletePost } from '../redux/modules/postSlice'
+
 const Detail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -24,6 +25,20 @@ const Detail = () => {
 
         return String(post.id) === id;
     });
+
+    const [like, setLike] = useState(false);
+
+
+    const likeClick = () => {
+        if(like){
+            setLike(false)
+            dispatch(hatePost({...postt, count: postt.count-1}))
+        }else{
+            setLike(true)
+            dispatch(likePost({...postt, count: postt.count+1}))
+        }
+    }
+    
     return (
         <StModal >
             <StModalBox>
@@ -31,7 +46,7 @@ const Detail = () => {
                     <StTitButton >
                         <h1>상세페이지</h1>
                         <div>
-                            <StButton onClick={() => { dispatch(deletePost(postt.id)); navigate('/'); }}>삭제하기</StButton>
+                            <StButton onClick={() => { dispatch(_deletePost(postt.id)); navigate('/'); }}>삭제하기</StButton>
                             <StButton onClick={() => navigate('/update/'+postt.id)}>수정하기</StButton>
                             <Link to="/">
                                 <StButton >이전으로</StButton>
@@ -44,7 +59,15 @@ const Detail = () => {
                     </StImgBox>
                     <StTitName>
                         <h1 >{postt.title}</h1>
-                        <p>❤️ 1</p>
+                        <span> <p> {like
+                        ? (<Like size="20px" style={{color:'red'}} bold onClick={likeClick}>
+                        ♥
+                      </Like>
+                        ) : (
+                      <Like size="20px" bold onClick={likeClick}>
+                        ♡
+                      </Like> 
+                        )} </p></span>
                     </StTitName>
                 </div>
                 <Comments />
@@ -103,4 +126,8 @@ const StTitName = styled.div`
     `
 const StImgBox = styled.div`
         margin: 0 auto;
+    `
+const Like = styled.div`
+    font-size : 30px;
+    padding-top: 30px;
     `

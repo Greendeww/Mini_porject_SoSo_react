@@ -8,7 +8,9 @@ const store = configureStore({
    
     commentSlice: commentSlice.reducer,
     postSlice: postSlice.reducer
-  }
+  },
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ 
+              serializableCheck: false, }),
 });
 
 export default store;
