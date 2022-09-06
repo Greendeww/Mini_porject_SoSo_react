@@ -46,7 +46,9 @@ const Detail = () => {
                     <StTitButton >
                         <h1>상세페이지</h1>
                         <div>
+
                             <StButton onClick={() => { dispatch(_deletePost(postt.id)); navigate('/'); }}>삭제하기</StButton>
+
                             <StButton onClick={() => navigate('/update/'+postt.id)}>수정하기</StButton>
                             <Link to="/">
                                 <StButton >이전으로</StButton>
@@ -55,9 +57,10 @@ const Detail = () => {
                         </div>
                     </StTitButton>
                     <StImgBox>
-                        <img src={postt.imageUrl} />
+                        <img src={postt?.imageUrl} />
                     </StImgBox>
                     <StTitName>
+
                         <h1 >{postt.title}</h1>
                         <span> <p> {like
                         ? (<Like size="20px" style={{color:'red'}} bold onClick={likeClick}>
@@ -68,6 +71,7 @@ const Detail = () => {
                         ♡
                       </Like> 
                         )} </p></span>
+
                     </StTitName>
                 </div>
                 <Comments />

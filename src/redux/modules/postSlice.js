@@ -26,6 +26,7 @@ export const _updatePost = createAsyncThunk(
         try {
             const data = await axios.patch(
                 `http://54.180.31.216/api/auth/post/${payload.id}`,
+
                 payload.data,{
                     headers:{
                         "Content-Type": "multipart/form",
@@ -81,8 +82,10 @@ export const postSlice = createSlice({
         axios.patch(`http://localhost:3001/post/${action.payload.id}`,action.payload)
     },
     deletePost(state,action){
+        console.log(state)
         let index = state.post.findIndex(post => post.id === action.payload)
         state.post.slice(index,1)
+        console.log(state)
         axios.delete(`http://54.180.31.216/api/auth/post/${action.payload}`, action.payload)
     },
     updatePost(state,action){
