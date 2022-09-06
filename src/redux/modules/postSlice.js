@@ -23,9 +23,13 @@ export const _updatePost = createAsyncThunk(
     async (payload, thunkApI) => {
         console.log(payload)
         try {
-            const data = await axios.put(
+            const data = await axios.patch(
                 `http://54.180.31.216/api/auth/post/${payload.id}`,
-                payload.data,
+                payload.data,{
+                    headers:{
+                        "Content-Type": "multipart/form",
+                    }
+                }
             )
             console.log(data)
         }catch(error){

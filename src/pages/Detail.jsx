@@ -31,7 +31,7 @@ const Detail = () => {
                     <StTitButton >
                         <h1>상세페이지</h1>
                         <div>
-                            <StButton onClick={() => { dispatch(deletePost(postt.id)); window.location.reload(); }}>삭제하기</StButton>
+                            <StButton onClick={() => { dispatch(deletePost(postt.id)); navigate('/'); }}>삭제하기</StButton>
                             <StButton onClick={() => navigate('/update/'+postt.id)}>수정하기</StButton>
                             <Link to="/">
                                 <StButton >이전으로</StButton>
