@@ -6,12 +6,14 @@ const initialState = {
     post: [],
     isLoading: false,
     error: null,
+    isDelete: false,
 };
 export const _getPost = createAsyncThunk(
     "post/getPost",
     async(payload, thunkApI) => {
         try {
             const data = await axios.get("http://54.180.31.216/api/auth/post");
+           
             // console.log(data)
             return thunkApI.fulfillWithValue(data.data);
         }catch(error){
@@ -47,14 +49,16 @@ export const _deletePost = createAsyncThunk(
         console.log(payload)
         try{
             const data = await axios.delete(
-                `http://54.180.31.216/api/auth/post/${payload}`,
+                `http://54.180.31.216/api/auth/post/${payload}`
+                ,
                 payload,{
                     headers:{
 
                     }
                 }
             )
-            return thunkAPI.fulfillWithValue(data.data);    
+            console.log(data)
+            return data
         }catch(error){
             return thunkAPI.rejectWithValue(error);
         }
@@ -96,6 +100,23 @@ export const postSlice = createSlice({
   },
   extraReducers:  (builder) => {
     builder
+        .addCase(_deletePost.pending, (state) => {
+            state.isLoading = true;
+            console.log("펜딩")
+        })
+        .addCase(_deletePost.fulfilled, (state, action) => {
+            state.isLoading = false;
+            const deleteState = state.post.findIndex(post => post.id === action.payload)
+            state.post.slice(deleteState,1)
+            state.isDelete = true;
+            console.log(state)
+        })
+        .addCase(_deletePost.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+            console.log("에러")
+        });
+    builder
         .addCase(_getPost.pending, (state) => {
             state.isLoading = true;
         })
@@ -110,21 +131,7 @@ export const postSlice = createSlice({
        
         });
 
-    builder
-        .addCase(_deletePost.pending, (state) => {
-            state.isLoading = true;
-            console.log("펜딩")
-        })
-        .addCase(_deletePost.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.post = action.payload;
-            console.log("풀필드")
-        })
-        .addCase(_deletePost.rejected, (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-            console.log("에러")
-        });
+   
   }
 });
 
