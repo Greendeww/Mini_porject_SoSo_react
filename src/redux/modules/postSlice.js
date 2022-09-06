@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import axios from "axios";
 
 const initialState = {
@@ -23,14 +24,39 @@ export const _updatePost = createAsyncThunk(
     async (payload, thunkApI) => {
         console.log(payload)
         try {
-            const data = await axios.put(
+            const data = await axios.patch(
                 `http://54.180.31.216/api/auth/post/${payload.id}`,
-                payload.data,
-                
+
+                payload.data,{
+                    headers:{
+                        "Content-Type": "multipart/form",
+                    }
+                    
+                }
             )
+            return thunkApI.fulfillWithValue(data.data);
             console.log(data)
         }catch(error){
+            return thunkApI.rejectWithValue(error);
+        }
+    }
+)
+export const _deletePost = createAsyncThunk(
+    "post/deDate",
+    async (payload, thunkAPI) => {
+        console.log(payload)
+        try{
+            const data = await axios.delete(
+                `http://54.180.31.216/api/auth/post/${payload}`,
+                payload,{
+                    headers:{
 
+                    }
+                }
+            )
+            return thunkAPI.fulfillWithValue(data.data);    
+        }catch(error){
+            return thunkAPI.rejectWithValue(error);
         }
     }
 )
@@ -68,20 +94,37 @@ export const postSlice = createSlice({
         axios.patch(`http://54.180.31.216/api/auth/post/${action.payload.id}`,action.payload)
     }
   },
-  extraReducers: {
-    [_getPost.pending] : (state) => {
-        state.isLoading = true;
-    },
-    [_getPost.fulfilled] : (state, action) => {
-        state.isLoading = false;
-        state.post = action.payload;
-        console.log(state.post)
-    },
-    [_getPost.rejected] : (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-        console.log(state.error)
-    }
+  extraReducers:  (builder) => {
+    builder
+        .addCase(_getPost.pending, (state) => {
+            state.isLoading = true;
+        })
+        .addCase(_getPost.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.post = action.payload;
+            console.log(state.post)
+        })
+        .addCase(_getPost.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+       
+        });
+
+    builder
+        .addCase(_deletePost.pending, (state) => {
+            state.isLoading = true;
+            console.log("펜딩")
+        })
+        .addCase(_deletePost.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.post = action.payload;
+            console.log("풀필드")
+        })
+        .addCase(_deletePost.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+            console.log("에러")
+        });
   }
 });
 

@@ -16,12 +16,22 @@ const HomeContents = () => {
     const dispatch = useDispatch(); 
     const navigate = useNavigate();
     
-    const post = useSelector((state) => state.postSlice.post)
-    //   console.log(post)  
 
-      useEffect(() => {
-        dispatch(_getPost());
-      }, [dispatch]);
+    const {isLoading, error, post} = useSelector((state) => state?.postSlice)
+    console.log(useSelector((state) => state?.postSlice))  
+  
+    useEffect(() => {
+      dispatch(_getPost());
+    }, [dispatch]);
+  
+    if (isLoading) {
+      return <div>로딩중....</div>;
+    }
+  
+    if(error) {
+      return <div>{error.message}</div>;
+    }
+
     
     return (
         <>
@@ -38,7 +48,7 @@ const HomeContents = () => {
                     </StImgBox>
                     <StLikeBox>
                     <Detailpg>{posts.title}</Detailpg>
-                <span>❤️{posts.count}</span>
+                <span>❤️{posts.like}</span>
                     </StLikeBox>
                 </StConBox>)
             })}

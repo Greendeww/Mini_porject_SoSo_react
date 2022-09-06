@@ -5,13 +5,14 @@ import styled from "styled-components";
 import { Outlet } from "react-router-dom";
 const Home = () => {
     return (
-        <>
+        <> 
             <Header />
-            <Postcards>
+            <Postcards>  
                 <HomeContents /> 
                 {/* map 함수 돌리실 곳 */}
             </Postcards>
-         <Outlet></Outlet>
+            <Outlet/>
+
             
         </>
     );
