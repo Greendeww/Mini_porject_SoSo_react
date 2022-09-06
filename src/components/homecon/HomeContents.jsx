@@ -1,48 +1,38 @@
-import React from 'react'
+import ImagePost from '../imagePost/ImagePost'
 import styled from 'styled-components'
-import { Link, useLocation } from "react-router-dom";
 import {useNavigate} from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useEffect } from "react";
 import { useSelector } from 'react-redux';
-import { _getPost } from '../../redux/modules/postSlice';
-import { useParams } from "react-router-dom";
-// import HomeConModal from '../modal/HomeConModal';
+import { _getPost } from '../../redux/modules/post';
+
+
 
 const HomeContents = () => {
-
-    const location = useLocation();
-
     const dispatch = useDispatch(); 
     const navigate = useNavigate();
-    
-    const post = useSelector((state) => state.postSlice.post)
-      console.log(post)  
 
+    const {isLoading, error, post} = useSelector((state) => state?.post)
+      // console.log( useSelector((state) => state?.post))  
+    
       useEffect(() => {
         dispatch(_getPost());
       }, [dispatch]);
     
+      if (isLoading) {
+        return <div>로딩중....</div>;
+      }
+    
+      if(error) {
+        return <div>{error.message}</div>;
+      }
+    
     return (
         <>
-         {post.map((posts) => {
-                return(
-                <StConBox key={posts.id} >
-                    <StImgBox>
-                    <Link to={"/detail/"+posts.id} state={{ background: location }}>
-                        <ImageSize>
-                            <StImg src={posts.imageUrl} />
-                        </ImageSize>
-                        <StImgBoxLike>❤️</StImgBoxLike>
-                        </Link>
-                    </StImgBox>
-                    <StLikeBox>
-                    <Detailpg>{posts.title}</Detailpg>
-                <span>❤️{posts.count}</span>
-                    </StLikeBox>
-                </StConBox>)
-            })}
-            
+        <StConBox >
+             {post.map((post) => (<ImagePost post={post} key={post.id}/>))}
+
+        </StConBox>
         </>
     )
 }
@@ -51,12 +41,14 @@ export default HomeContents
 
 
 const StConBox = styled.div`
-   border-radius: 15px;
+border-radius: 15px;
 margin-bottom:1rem;
 background-color: white;
 // 줄바꿈 방지
 display:inline-block;
-min-width: 20%;
+min-width: 100%;
+width: 3000px;
+flex-wrap: wrap;
 `
 const StImgBox = styled.div`
 position: relative;

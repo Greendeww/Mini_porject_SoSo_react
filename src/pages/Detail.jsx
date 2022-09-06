@@ -52,6 +52,15 @@ const Detail = () => {
         </StModal>
     )
 }
+    `
+const StTitName = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    `
+const StImgBox = styled.div`
+        margin: 0 auto;
+    `
 
 export default Detail
 const StModal = styled.div`

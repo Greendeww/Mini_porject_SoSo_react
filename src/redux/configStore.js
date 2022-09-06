@@ -1,25 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import postSlice from "./modules/postSlice"
-
-import commentSlice from "./modules/commentSlice";
+import post from "../redux/modules/post"
+// import contents from "../redux/modules/contents"
 
 const store = configureStore({
   reducer: {
-   
-    commentSlice: commentSlice.reducer,
-    postSlice: postSlice.reducer
+     commentSlice: commentSlice.reducer,
+     post : post,
+    
   }
 });
 
 export default store;
 
-// import { configureStore } from "@reduxjs/toolkit";
-// import todos from "../modules/todo";
 
-// const store = configureStore({
-//   reducer: {
-//     todos: todos.reducer,
-//   },
-// });
-
-// export default store;

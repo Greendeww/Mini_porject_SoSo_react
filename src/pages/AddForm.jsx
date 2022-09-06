@@ -5,6 +5,7 @@ import Form from '../components/form/Form'
 const AddForm = () => {
   return (
     <>
+      <FmHeader/>
       <Form/>
     </>
   )
