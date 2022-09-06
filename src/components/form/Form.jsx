@@ -7,12 +7,19 @@ import Image from "../image/Image";
 import axios from "axios";
 
 function Form(){
-    const [imageUrl, setImageUrl] = useState(null);
+    // const [imageUrl, setImageUrl] = useState(null);
     const [title, setTitle] = useState();
-    
+    const [fileImage, setFileImage] = useState("");
+    const [imageUrl, setImageUrl] = useState();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+
+    const onChangeImg = (e) => {
+        setImageUrl(e.target.files[0]);
+        console.log(e.target.files[0])
+        setFileImage(URL.createObjectURL(e.target.files[0]))
+    }
 
     const onChangeHandler = (event) => {
         setTitle(event.target.value);
@@ -25,7 +32,7 @@ function Form(){
         let req = {
             title:title
         }
-        let files = e.target.image.files[0];
+        let files = imageUrl;
         console.log(e.target.image.files[0]);
         const json =JSON.stringify(req);
         let formData = new FormData();
@@ -67,7 +74,7 @@ function Form(){
                 onChange={onChangeHandler}
                 // required
             />
-
+            <img className="img" alt="" src={fileImage}></img>
             <label htmlFor="imageUrl">
                 <input
                 name="image"
@@ -75,6 +82,7 @@ function Form(){
                 accept=".gif, .jpg, .png"
                 mutliple="multiple"
                 id="imageUrl"
+                onChange={onChangeImg}
                 />
             </label>
             </div>

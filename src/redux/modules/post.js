@@ -11,7 +11,7 @@ export const _getPost = createAsyncThunk(
     async(payload, thunkApI) => {
         try {
             const data = await axios.get("http://54.180.31.216/api/auth/post");
-            // console.log(data)
+            console.log(data)
             return thunkApI.fulfillWithValue(data.data);
         }catch(error){
             return thunkApI.rejectWithValue(error);
@@ -21,18 +21,26 @@ export const _getPost = createAsyncThunk(
 export const _updatePost = createAsyncThunk(
     "post/upDate",
     async (payload, thunkApI) => {
-        console.log(payload)
+        // console.log(payload)
         try {
-            const data = await axios.put(
+            const data = await axios.delete(
                 `http://54.180.31.216/api/auth/post/${payload.id}`,
                 payload.data,
+                {
+                headers:{
+                        "Content-Type": "multipart/form",
+                    }
+                }   
             )
+            
+            
             console.log(data)
+            return thunkApI.fulfillWithValue(data.data)    
         }catch(error){
-
+            return thunkApI.rejectWithValue(error);
         }
     }
-)
+);
 
 
 export const postSlice = createSlice({
@@ -62,7 +70,7 @@ export const postSlice = createSlice({
     updatePost(state,action){
         let index = state.post.findIndex(post => post.id === action.payload.id);
         state.post.slice(index,1,action.payload)
-        axios.patch(`http://54.180.31.216/api/auth/post/${action.payload.id}`,action.payload)
+        axios.patch(`http://54.180.31.216/api/auth/post/${action.payload.id}`,action.payload.data)
     }
   },
   extraReducers: {

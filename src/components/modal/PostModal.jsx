@@ -76,7 +76,7 @@ function PostModal(){
            
         }
         // navigate("/");
-        dispatch(_updatePost(payload,id))
+        dispatch(_updatePost(payload))
         for(let value of formData.values()) {
             console.log(value);
             }
