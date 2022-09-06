@@ -11,7 +11,7 @@ const Home = () => {
                 <HomeContents /> 
                 {/* map 함수 돌리실 곳 */}
             </Postcards>
-         <Outlet />
+         <Outlet></Outlet>
             
         </>
     );

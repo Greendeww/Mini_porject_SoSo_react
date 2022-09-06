@@ -17,7 +17,7 @@ const HomeContents = () => {
     const navigate = useNavigate();
     
     const post = useSelector((state) => state.postSlice.post)
-      console.log(post)  
+    //   console.log(post)  
 
       useEffect(() => {
         dispatch(_getPost());
@@ -29,7 +29,7 @@ const HomeContents = () => {
                 return(
                 <StConBox key={posts.id} >
                     <StImgBox>
-                    <Link to={"/detail/"+posts.id} state={{ background: location }}>
+                    <Link to={"/detail/"+posts.id}>
                         <ImageSize>
                             <StImg src={posts.imageUrl} />
                         </ImageSize>

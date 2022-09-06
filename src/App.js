@@ -13,15 +13,20 @@ function App() {
 
     <div className="App">
       {/* 백그라운드 객체가 없어도 렌더링 */}
+      <Routes>
+      <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<Sign />} />
+        <Route path="/post" element={<AddForm />} />
+      </Routes>
       <Routes >
         <Route path="/" element={<Home />}>
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/update/:id" element={<UpdatePost/>} />
-        <Route path="/post" element={<AddForm />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signin" element={<Sign />} />
+        
+        
         </Route>
       </Routes>
+ 
 
     </div>
   );

@@ -26,6 +26,7 @@ export const _updatePost = createAsyncThunk(
             const data = await axios.put(
                 `http://54.180.31.216/api/auth/post/${payload.id}`,
                 payload.data,
+                
             )
             console.log(data)
         }catch(error){
@@ -55,8 +56,10 @@ export const postSlice = createSlice({
         axios.patch(`http://localhost:3001/post/${action.payload.id}`,action.payload)
     },
     deletePost(state,action){
+        console.log(state)
         let index = state.post.findIndex(post => post.id === action.payload)
         state.post.slice(index,1)
+        console.log(state)
         axios.delete(`http://54.180.31.216/api/auth/post/${action.payload}`, action.payload)
     },
     updatePost(state,action){
