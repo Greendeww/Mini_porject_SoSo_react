@@ -13,12 +13,14 @@ import { deletePost,likePost,hatePost,_deletePost } from '../redux/modules/postS
 const Detail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
     const { id } = useParams()
+
+    const isdeleted = useSelector((state) => state.postSlice.isDelete)
+    
     const posts = useSelector((state) => state.postSlice.post)
 
     useEffect(() => {
-        dispatch(_getPost());
+        setTimeout(() =>{dispatch(_getPost());},1000)
     }, [dispatch]);
     //   새로고침시 화면 안뜸
     let postt = posts.find((post) => {
@@ -38,7 +40,13 @@ const Detail = () => {
             dispatch(likePost({...postt, count: postt.count+1}))
         }
     }
-    
+    const onClickDeleteHandler = () => {
+         dispatch(_deletePost(postt.id))
+         navigate('/')
+        
+        
+    }
+
     return (
         <StModal >
             <StModalBox>
@@ -46,14 +54,12 @@ const Detail = () => {
                     <StTitButton >
                         <h1>상세페이지</h1>
                         <div>
-
-                            <StButton onClick={() => { dispatch(_deletePost(postt.id)); navigate('/'); }}>삭제하기</StButton>
+                            <StButton onClick={onClickDeleteHandler}>삭제하기</StButton>
 
                             <StButton onClick={() => navigate('/update/'+postt.id)}>수정하기</StButton>
                             <Link to="/">
                                 <StButton >이전으로</StButton>
                             </Link>
-
                         </div>
                     </StTitButton>
                     <StImgBox>
