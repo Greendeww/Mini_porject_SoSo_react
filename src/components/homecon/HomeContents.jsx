@@ -16,6 +16,7 @@ const HomeContents = () => {
     const dispatch = useDispatch(); 
     const navigate = useNavigate();
     
+
     const {isLoading, error, post} = useSelector((state) => state?.postSlice)
     console.log(useSelector((state) => state?.postSlice))  
   
@@ -30,6 +31,7 @@ const HomeContents = () => {
     if(error) {
       return <div>{error.message}</div>;
     }
+
     
     return (
         <>
@@ -37,7 +39,7 @@ const HomeContents = () => {
                 return(
                 <StConBox key={posts.id} >
                     <StImgBox>
-                    <Link to={"/detail/"+posts.id} state={{ background: location }}>
+                    <Link to={"/detail/"+posts.id}>
                         <ImageSize>
                             <StImg src={posts.imageUrl} />
                         </ImageSize>

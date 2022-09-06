@@ -24,6 +24,7 @@ const Login = () => {
                     </Link>
         </StLoginContainer>
         </Back>
+        
     )
 }
 
