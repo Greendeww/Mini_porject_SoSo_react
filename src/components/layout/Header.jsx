@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,7 +15,9 @@ const Header = () => {
         SoSo
       </StLogo>
         <StHeaderBox>
+          <Link to={"/post"}>
             <StButton>게시물 작성</StButton>
+            </Link>
       <p>로그아웃</p>
       </StHeaderBox>
     </HeaderContainer>
@@ -32,7 +34,6 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   padding: 20px;
   background-color: #fff;
-  margin-bottom: 50px;
 `;
 const StHeaderBox= styled.div`
   display: flex;
@@ -52,5 +53,10 @@ const StButton = styled.button`
     color: #fff;
     border-radius: 10px;
     cursor: pointer;
+    transition: all 0.3s;
+    :hover{
+        background-color: #fff;
+        color:#000
+    }
     
 `
