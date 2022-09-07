@@ -32,6 +32,8 @@ export const _updatePost = createAsyncThunk(
                 payload.data,{
                     headers:{
                         "Content-Type": "multipart/form",
+                        Authorization: payload.token,
+                        RefreshToken: payload.refresh
                     }
                     
                 }
@@ -49,10 +51,14 @@ export const _deletePost = createAsyncThunk(
         console.log(payload)
         try{
             const data = await axios.delete(
-                `http://13.209.97.75:8080/api/auth/post/${payload}`
+
+                `http://13.209.97.75:8080/api/auth/post/${payload.id}`
+
                 ,
-                payload,{
+                payload.id,{
                     headers:{
+                        Authorization: payload.token,
+                        RefreshToken: payload.refresh
 
                     }
                 }

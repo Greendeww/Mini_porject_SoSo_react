@@ -2,18 +2,17 @@ import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components'
 import { useNavigate, useParams} from 'react-router-dom'
-// import Image from '../image/Image';
 import { useDispatch } from 'react-redux';
-// import Carousel from 'react-bootstrap/Carousel'
-// import {updatePost} from '../../redux/modules/post'
 import { useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { _getPost } from '../redux/modules/postSlice';
-// import axios from 'axios';
-// import { bindActionCreators } from 'redux';
 import { _updatePost } from '../redux/modules/postSlice';
+import { getCookie } from '../shared/cookie';
 
 function UpdatePost(){
+
+    let token = getCookie("ACESS_TOKEN");
+    let refresh = getCookie("REFRESH_TOKEN");
     const initialState = {
         id:0,
         title:"",
@@ -70,8 +69,9 @@ function UpdatePost(){
         console.log(formData)
         const payload = {
             id:id,
-            data: formData
-           
+            data: formData,
+            token : token,
+            refresh : refresh
         }
         
         dispatch(_updatePost(payload))

@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-// import GlobalLayout from "../../global/GlobalLayout";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
-// import { diaryApi } from '../../redux/modules/postsSlice';
 import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../shared/cookie";
+
 const Form = () => {
+  let token = getCookie();
+  let refresh = getCookie();
+
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState();
@@ -31,9 +34,11 @@ const Form = () => {
     form.append("title", titleblob);
     console.log(titleblob);
     form.append("imageUrl", imageUrl);
-     const res = await axios.post('http://54.180.31.216/api/auth/post',form,{
+     const res = await axios.post('http://13.209.97.75:8080/api/auth/post',form,{
             headers:{
                 "Content-Type": "multipart/form",
+                Authorization: getCookie("ACESS_TOKEN"),
+                RefreshToken: getCookie("REFRESH_TOKEN")
             }
         });
         navigate("/");
