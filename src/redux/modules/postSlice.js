@@ -6,13 +6,13 @@ const initialState = {
     post: [],
     isLoading: false,
     error: null,
-    isDelete: false,
+    like: false,
 };
 export const _getPost = createAsyncThunk(
     "post/getPost",
     async(payload, thunkApI) => {
         try {
-            const data = await axios.get("http://54.180.31.216/api/auth/post");
+            const data = await axios.get("http://13.209.97.75:8080/api/auth/post");
            
             // console.log(data)
             return thunkApI.fulfillWithValue(data.data);
@@ -27,7 +27,7 @@ export const _updatePost = createAsyncThunk(
         console.log(payload)
         try {
             const data = await axios.patch(
-                `http://54.180.31.216/api/auth/post/${payload.id}`,
+                `http://13.209.97.75:8080/api/auth/post/${payload.id}`,
 
                 payload.data,{
                     headers:{
@@ -49,7 +49,7 @@ export const _deletePost = createAsyncThunk(
         console.log(payload)
         try{
             const data = await axios.delete(
-                `http://54.180.31.216/api/auth/post/${payload}`
+                `http://13.209.97.75:8080/api/auth/post/${payload}`
                 ,
                 payload,{
                     headers:{
@@ -72,30 +72,30 @@ export const postSlice = createSlice({
   reducers:{
     createPost(state,action){
         state.post.push(action.payload);
-        axios.post("http://54.180.31.216/api/auth/post",action.payload)
+        axios.post("http://13.209.97.75:8080/api/auth/post",action.payload)
         .then((response) => response.data);
     },
     likePost(state, action){
        let index = state.post.findIndex(post => post.id === action.payload.id);
        state.post[index].count +=1;
-       axios.patch(`http://localhost:3001/post/${action.payload.id}`,action.payload)
+       axios.patch(`http://13.209.97.75:8080/post/${action.payload.id}`,action.payload)
     },
     hatePost(state, action){
         let index = state.post.findIndex(post => post.id === action.payload.id);
         state.post[index].count -=1;
-        axios.patch(`http://localhost:3001/post/${action.payload.id}`,action.payload)
+        axios.patch(`http://13.209.97.75:8080/post/${action.payload.id}`,action.payload)
     },
     deletePost(state,action){
         console.log(state)
         let index = state.post.findIndex(post => post.id === action.payload)
         state.post.slice(index,1)
         console.log(state)
-        axios.delete(`http://54.180.31.216/api/auth/post/${action.payload}`, action.payload)
+        axios.delete(`http://13.209.97.75:8080/api/auth/post/${action.payload}`, action.payload)
     },
     updatePost(state,action){
         let index = state.post.findIndex(post => post.id === action.payload.id);
         state.post.slice(index,1,action.payload)
-        axios.patch(`http://54.180.31.216/api/auth/post/${action.payload.id}`,action.payload)
+        axios.patch(`http://13.209.97.75:8080/api/auth/post/${action.payload.id}`,action.payload)
     }
   },
   extraReducers:  (builder) => {
