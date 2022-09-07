@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { _getPost } from '../redux/modules/postSlice';
-import { _updatePost } from '../redux/modules/postSlice';
+import { _updatePost,updatePost } from '../redux/modules/postSlice';
 import { getCookie } from '../shared/cookie';
 
 function UpdatePost(){
@@ -75,6 +75,7 @@ function UpdatePost(){
         }
         
         dispatch(_updatePost(payload))
+        dispatch(updatePost(payload))
         navigate("/");
         for(let value of formData.values()) {
             console.log(value);

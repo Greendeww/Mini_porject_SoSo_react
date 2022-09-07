@@ -52,6 +52,7 @@ const Detail = () => {
             refresh: refresh
          }
          dispatch(_deletePost(payload))
+         dispatch(deletePost(payload))
          navigate('/')
         
         
