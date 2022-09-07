@@ -43,7 +43,7 @@ const HomeContents = () => {
                         <ImageSize>
                             <StImg src={posts.imageUrl} />
                         </ImageSize>
-                        <StImgBoxLike>❤️</StImgBoxLike>
+                        <StImgBoxLike>♥</StImgBoxLike>
                         </Link>
                     </StImgBox>
                     <StLikeBox>
