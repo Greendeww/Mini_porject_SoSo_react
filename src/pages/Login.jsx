@@ -1,30 +1,48 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Link, Outlet, useLocation } from "react-router-dom";
-const Login = () => {
-    const location = useLocation();
+import styled from "styled-components";
+import nextId from "react-id-generator";
+import { useState } from "react";
+import {useSelector, useDispatch} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {__userLogin} from '../redux/modules/users'
+const Login = () => {   
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const initialstate = {
+        nickname:"",
+        password:"",
+    }
+    const [user,setUser] = useState(initialstate);
+        // console(user)
+    const onChangeHandler = (e) => {
+        const {name, value} = e.target;
+        setUser({...user, [name]: value})
+    };
+
     return (
         <Back>
-        <StLoginContainer>
+        <StLoginContainer  >
             <h1>로그인</h1>
             <StInputBox>
                 <p>아이디</p>
-                <StInput type="text" />
+                <StInput type="text" placeholder='사용할 아이디를 입력해주세요'
+                            name='nickname' value={user.nickname} onChange={onChangeHandler}/>
             </StInputBox>
             <StInputBox>
                 <p>비밀번호</p>
-                <StInput type="text" />
+                <StInput type="password" placeholder='사용할 아이디를 입력해주세요'
+                            name='password' value={user.password} onChange={onChangeHandler} />
             </StInputBox>
             <StInputBox>
-                <p>아직 회원이 아니신가요?</p>
+                <Signup onClick={() => navigate('/signin')}>아직 회원이 아니신가요?</Signup>
             </StInputBox>
-            <StButton>로그인</StButton>
-            <Link to="/detail" state={{ background: location }}>
-                        here <Outlet />
-                    </Link>
+            <StButton onClick={() => {
+                if (user.nickname.trim() === "" || user.password.trim() === "")
+                return alert("닉네임과 비밀번호를 입력하세요.");
+                dispatch(__userLogin(user));
+                navigate('/')
+            }}>로그인</StButton>
         </StLoginContainer>
         </Back>
-        
     )
 }
 
@@ -34,7 +52,7 @@ const Back = styled.div`
     width: 100%;
     height: 100vh;
 `
-const StLoginContainer = styled.div`
+const StLoginContainer = styled.form`
     width: 300px;
     padding: 50px;
     background-color: #fff;
@@ -63,4 +81,10 @@ const StButton = styled.button`
     border: none;
     color: #fff;
     border-radius: 10px;
+`
+const Signup = styled.p`
+    &:hover{
+   color: blue; 
+   cursor: pointer;
+   }
 `

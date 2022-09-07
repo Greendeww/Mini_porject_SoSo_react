@@ -59,24 +59,21 @@ function UpdatePost(){
         // let files = e.target.image.files[0];
         // console.log(e.target.image.files[0])
         const json =JSON.stringify(req);
+        console.log(json)
         let formData = new FormData();
 
         const blob = new Blob([json], {type: "application/json"});
-        // formData.append("title",blob);
-        // formData.append("id",blob);
+        formData.append("title",blob);
         formData.append("imageUrl", imgFile);
         
         console.log(formData)
         const payload = {
             id:id,
-            data:{
-                title:title,
-                imageUrl:formData
-            }
+            data: formData
            
         }
         // navigate("/");
-        dispatch(_updatePost(payload,id))
+        dispatch(_updatePost(payload))
         for(let value of formData.values()) {
             console.log(value);
             }
