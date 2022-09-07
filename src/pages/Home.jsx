@@ -4,6 +4,7 @@ import Header from "../components/layout/Header";
 import styled from "styled-components";
 import { Outlet } from "react-router-dom";
 const Home = () => {
+    
     return (
         <> 
             <Header />
