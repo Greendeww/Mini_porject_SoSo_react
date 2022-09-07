@@ -29,6 +29,7 @@ function UpdatePost(){
     // const [imgBase64, setImgBase64] = useState([]);
     const [imgFile, setImgFile] = useState(null);
     const [fileImage, setFileImage] = useState("");
+    
 
     const {isLoading, error, post} = useSelector((state) => state.postSlice)
     console.log(post)
@@ -72,8 +73,9 @@ function UpdatePost(){
             data: formData
            
         }
-        // navigate("/");
+        
         dispatch(_updatePost(payload))
+        navigate("/");
         for(let value of formData.values()) {
             console.log(value);
             }
