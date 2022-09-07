@@ -9,7 +9,7 @@ export const __userLogin = createAsyncThunk(
     async (payload,thunkApI) => {
         try{
             const data = await axios.post(
-                "http://13.209.97.75:8080/api/member/login",
+                "http://54.180.31.216/api/member/login",
                 payload
             )
                     console.log(data)
@@ -56,7 +56,7 @@ export const _postIdCheck = createAsyncThunk(
 export const _postNickdCheck = createAsyncThunk(
     'users/NickCheck',
     async (nickname, thunkAPI) => {
-        try{ const data = await axios.post('http://13.209.97.75:8080/api/member/signup',
+        try{ const data = await axios.post('http://54.180.31.216/api/member/signup',
             nickname,{
                 headers: {'Content-Type': `application/json`},
             })
@@ -78,7 +78,7 @@ export const _logout = createAsyncThunk(
     "users/logout",
     async (payload, thunkAPI) => {
         try{
-            const data = await axios.post("http://3.34.5.30:8080/api/auth/member/logout",{
+            const data = await axios.post("http://54.180.31.216/api/auth/member/logout",{
                 headers:{
                          'Content-Type': `application/json`,
                          Authorization: getCookie("ACESS_TOKEN"),

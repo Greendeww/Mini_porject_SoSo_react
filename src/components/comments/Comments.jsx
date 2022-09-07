@@ -10,8 +10,8 @@ const Comments = () => {
     const [review, setReview] = useState({});
     let { id } = useParams();
     // console.log(id)
-    const comments = useSelector((state) => state.commentSlice);
-    // console.log(comments)
+    const comments = useSelector((state) => state.commentSlice.comments);
+    console.log(comments)
     const onChangeHandler = (event) => {
         const comm = event.target.value;
         setReview({ ...review, id: nextId(), postId: id, comment: comm });
@@ -27,13 +27,13 @@ const Comments = () => {
         <>
             <div>
                 <StCommentBox>
-                    <input type="text"
+                    <StInput type="text"
                         onChange={onChangeHandler}
                         name="comment"
                     />
-                    <button onClick={() => {
+                    <StButton onClick={() => {
                         dispatch(addComment(review))
-                    }}>댓글달기</button>
+                    }}>댓글달기</StButton>
                 </StCommentBox>
                 <div>
                     {commentList.map((commet) => {
@@ -51,3 +51,16 @@ const StCommentBox = styled.div`
         display: flex;
         justify-content: space-between;
     `
+const StInput = styled.input`
+    width: 70%;
+    height: 30px;
+    border: 1px solid #eee;
+`
+const StButton = styled.button`
+    width: 150px;
+    height: 30px;
+    background-color: #67df;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+`

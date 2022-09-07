@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link, useLocation } from "react-router-dom";
 import {useNavigate} from 'react-router-dom'
@@ -19,8 +19,9 @@ const HomeContents = () => {
     const navigate = useNavigate();
     
 
-    const {isLoading, error, post} = useSelector((state) => state?.postSlice)
-    console.log(useSelector((state) => state?.postSlice))  
+    const {isLoading, error} = useSelector((state) => state?.postSlice)
+    const post = useSelector((state)=> state.postSlice.post)
+    console.log(useSelector((state) => state?.postSlice.data))  
   
     useEffect(() => {
       dispatch(_getPost());
@@ -34,7 +35,6 @@ const HomeContents = () => {
       return <div>{error.message}</div>;
     }
 
-    
     return (
         <>
          {post.map((posts) => {
@@ -50,7 +50,7 @@ const HomeContents = () => {
                     </StImgBox>
                     <StLikeBox>
                     <Detailpg>{posts.title}</Detailpg>
-                <span>❤️{posts.like}</span>
+                <span>♡{posts.like}1</span>
                     </StLikeBox>
                 </StConBox>)
             })}
@@ -101,12 +101,14 @@ const StLikeBox = styled.div`
     background-color: #fff;
     border-radius: 10px;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
 `
 const Detailpg = styled.h4`
+padding: 10px;
    &:hover{
    color: blue; 
    cursor: pointer;
+   
    }
 `

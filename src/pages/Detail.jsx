@@ -33,18 +33,22 @@ const Detail = () => {
         return String(post.id) === id;
     });
 
-    const [like, setLike] = useState(false);
+  
 
 
-    const likeClick = () => {
-        if(like){
-            setLike(false)
-            dispatch(hatePost({...postt, count: postt.count-1}))
-        }else{
-            setLike(true)
-            dispatch(likePost({...postt, count: postt.count+1}))
-        }
-    }
+    // const likeClick = () => {
+    //     if(posts.isLike){
+    //         dispatch(__FecthLike( () => {
+    //         const payload = {
+    //             id:postt.id,
+    //             like: postt.count+1,
+
+    //         }
+    //     }))
+    //     }else{
+    //         dispatch(likePost({...postt, likes: postt.count+1}))
+    //     }
+    // }
     const onClickDeleteHandler = () => {
          const payload = {
             id:postt.id,
@@ -63,22 +67,24 @@ const Detail = () => {
                 <div>
                     <StTitButton >
                         <h1>상세페이지</h1>
-                        <div>
+                        <Img>
                             <StButton onClick={onClickDeleteHandler}>삭제하기</StButton>
 
                             <StButton onClick={() => navigate('/update/'+postt.id)}>수정하기</StButton>
                             <Link to="/">
                                 <StButton >이전으로</StButton>
                             </Link>
-                        </div>
+                        </Img>
                     </StTitButton>
+                    <div>
                     <StImgBox>
                         <img src={postt?.imageUrl} />
                     </StImgBox>
+                    </div>
                     <StTitName>
 
-                        <h1 >{postt.title}</h1>
-                        <div> <p> {like
+                        <h1 >제목:{postt.title} </h1><span>작성자:{postt.nickname}</span>
+                        {/* <div> <p> {like
                         ? (<Like size="20px" style={{color:'red'}} bold onClick={likeClick}>
                         ♥
                       </Like>
@@ -86,7 +92,7 @@ const Detail = () => {
                       <Like size="20px" bold onClick={likeClick}>
                         ♡
                       </Like> 
-                        )} </p>{postt.count}</div>
+                        )} </p>{postt.count}</div> */}
 
                     </StTitName>
                 </div>
@@ -126,7 +132,7 @@ const StTitButton = styled.div`
 `
 const StButton = styled.button`
     margin: 0 5px;
-    width: 150px;
+    width: 100px;
     height: 40px;
     border: none;
     background-color: #3858e9;
@@ -145,9 +151,17 @@ const StTitName = styled.div`
     align-items: center;
     `
 const StImgBox = styled.div`
-        margin: 0 auto;
+       position: relative;
+display: inline-flex;
+width: 90%;
+border-radius: 10px;
+overflow: hidden;
     `
-const Like = styled.div`
-    font-size : 30px;
-    padding-top: 30px;
+const Img = styled.div`
+    border-radius: 15px;
+margin-bottom:1rem;
+background-color: white;
+// 줄바꿈 방지
+display:inline-block;
+max-width: 50%;
     `
