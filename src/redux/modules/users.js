@@ -1,25 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { setCookie } from "../../shared/cookie";
+import { Navigate } from "react-router-dom";
+import { deleteCookie, setCookie ,  getCookie} from "../../shared/cookie";
+
 
 export const __userLogin = createAsyncThunk(
     "user/userLogin",
-    async ({payload,navigate},thunkApI) => {
+    async (payload,thunkApI) => {
         try{
             const data = await axios.post(
                 "http://13.209.97.75:8080/api/member/login",
                 payload
-            );
-            if(data.success) {
-                console.log(data)
-                setCookie("isLogin",data.token);
-                setCookie("ACESS_TOKEN",1)
-                setCookie("REFRESH_TOKEN","콘솔보고 찍어보기")
-                navigate('/')
-                console.log(data)
-                return thunkApI.fulfillWithValue(data.data.username);
-            }
-            localStorage.setItem("username",data.username);
+            )
+                    console.log(data)
+                    setCookie("isLogin",data.headers.authorization);
+                    setCookie("ACESS_TOKEN",data.headers.authorization,1)
+                    setCookie("REFRESH_TOKEN",data.headers.refreshtoken)
+                    localStorage.setItem("nickname",data.data.data.nickname);
+                    if(data.data.success === false){
+                        console.log(data)
+                        alert(data.data.error.message)
+                 } 
+                 return thunkApI.fulfillWithValue(data.data.username);         
+   
+            
+               
+            
+            
         }catch(error){
             return thunkApI.rejectWithValue(error.message);
         }
@@ -67,33 +74,26 @@ export const _postNickdCheck = createAsyncThunk(
         }
     }
 )
-//요청 보낼 때 어썰라이즌이랑 리프래시 둘라 보내기
-const userToken = localStorage.getItem("Authorization")
-    ? localStorage.getItem("Authorization")
-    : null;
+export const _logout = createAsyncThunk(
+    "users/logout",
+    async (payload, thunkAPI) => {
+        try{
+            const data = await axios.post("http://3.34.5.30:8080/api/auth/member/logout",{
+                headers:{
+                         'Content-Type': `application/json`,
+                         Authorization: getCookie("ACESS_TOKEN"),
+                         RefreshToken: getCookie("REFRESH_TOKEN")
+                }
+            })
+        }catch(error){
 
-//로그아웃 기능(미완성)
-export const userSlice = createSlice({
-    name:"userLogout",
-    initialState:{
-        isLoading: false,
-        userInfo: null,
-        userToken,
-        error: null,
-        success: false,
-    },
-    reducers: {
-        logout: (state) => {
-            localStorage.removeItem("Authorization");
-            localStorage.removeItem("RefreshToken");
-            localStorage.removeItem("userInfo");
-            state.isLoading = false;
-            state.userInfo = null;
-            state.userToken = null;
-            state.error = null;
         }
     }
-})
+)
+//요청 보낼 때 어썰라이즌이랑 리프래시 둘라 보내기
+
+
+//로그아웃 기능(미완성)
 
 
 //로그인 기능
@@ -106,7 +106,13 @@ export const users = createSlice({
         isLoading:false,
     },
 
-    reducers:{},
+    reducers:{
+        logout(state) {
+            deleteCookie("ACESS_TOKEN")
+            deleteCookie("REFRESH_TOKEN")
+            deleteCookie("username")
+        }
+    },
 
     extraReducers: {
        [__userLogin.pending]: (state) => {
@@ -123,6 +129,6 @@ export const users = createSlice({
     }
 })
 
-export let { userSignup } = users.actions;
+export let { userSignup,logout } = users.actions;
 
 export default users;

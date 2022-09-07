@@ -4,7 +4,9 @@ import { useState } from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import {__userLogin} from '../redux/modules/users'
+import { getCookie } from "../shared/cookie";
 const Login = () => {   
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const initialstate = {
@@ -35,13 +37,11 @@ const Login = () => {
             <StInputBox>
                 <Signup onClick={() => navigate('/signin')}>아직 회원이 아니신가요?</Signup>
             </StInputBox>
-            <StButton onClick={() => {
+            <StButton type='button' onClick={() => {
                 if (user.username.trim() === "" || user.password.trim() === "")
-                return alert("닉네임과 비밀번호를 입력하세요.");
-                console.log(user)
-                dispatch(__userLogin(user,navigate));
-                console.log("로그인")
-                // navigate('/')
+                return alert("아이디와 비밀번호를 입력하세요.");
+                dispatch(__userLogin(user));
+                navigate('/')
             }}>로그인</StButton>
         </StLoginContainer>
         </Back>

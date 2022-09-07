@@ -9,8 +9,12 @@ import { _getPost } from '../redux/modules/postSlice';
 import Comments from '../components/comments/Comments';
 import { useParams } from 'react-router-dom';
 import { deletePost,likePost,hatePost,_deletePost } from '../redux/modules/postSlice'
+import { getCookie } from '../shared/cookie';
 
 const Detail = () => {
+    let token = getCookie("ACESS_TOKEN");
+    let refresh = getCookie("REFRESH_TOKEN");
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { id } = useParams()
@@ -42,7 +46,12 @@ const Detail = () => {
         }
     }
     const onClickDeleteHandler = () => {
-         dispatch(_deletePost(postt.id))
+         const payload = {
+            id:postt.id,
+            token: token,
+            refresh: refresh
+         }
+         dispatch(_deletePost(payload))
          navigate('/')
         
         

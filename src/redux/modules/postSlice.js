@@ -12,7 +12,7 @@ export const _getPost = createAsyncThunk(
     "post/getPost",
     async(payload, thunkApI) => {
         try {
-            const data = await axios.get("http://54.180.31.216/api/auth/post");
+            const data = await axios.get("http://13.209.97.75:8080/api/auth/post");
            
             // console.log(data)
             return thunkApI.fulfillWithValue(data.data);
@@ -27,11 +27,13 @@ export const _updatePost = createAsyncThunk(
         console.log(payload)
         try {
             const data = await axios.patch(
-                `http://54.180.31.216/api/auth/post/${payload.id}`,
+                `http://13.209.97.75:8080/api/auth/post/${payload.id}`,
 
                 payload.data,{
                     headers:{
                         "Content-Type": "multipart/form",
+                        Authorization: payload.token,
+                        RefreshToken: payload.refresh
                     }
                     
                 }
@@ -49,10 +51,12 @@ export const _deletePost = createAsyncThunk(
         console.log(payload)
         try{
             const data = await axios.delete(
-                `http://54.180.31.216/api/auth/post/${payload}`
+                `http://13.209.97.75:8080/api/auth/post/${payload.id}`
                 ,
-                payload,{
+                payload.id,{
                     headers:{
+                        Authorization: payload.token,
+                        RefreshToken: payload.refresh
 
                     }
                 }
