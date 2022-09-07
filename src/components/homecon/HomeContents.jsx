@@ -7,10 +7,12 @@ import { useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { _getPost } from '../../redux/modules/postSlice';
 import { useParams } from "react-router-dom";
+import { getCookie } from '../../shared/cookie';
 // import HomeConModal from '../modal/HomeConModal';
 
 const HomeContents = () => {
-
+    let token = getCookie("ACCESS_TOKEN");
+    let refresh = getCookie("REFRESH_TOKEN")
     const location = useLocation();
 
     const dispatch = useDispatch(); 

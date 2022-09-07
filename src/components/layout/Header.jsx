@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { _logout,logout } from "../../redux/modules/users";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -18,7 +21,7 @@ const Header = () => {
           <Link to={"/post"}>
             <StButton>게시물 작성</StButton>
             </Link>
-      <p>로그아웃</p>
+      <p onCLick={() => {dispatch(_logout); dispatch(logout); navigate('/')}}>로그아웃</p>
       </StHeaderBox>
     </HeaderContainer>
   );
