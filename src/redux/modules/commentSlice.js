@@ -40,7 +40,7 @@ export const __addComment = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.post(
-        `url/api/auth/comment/{id}`,
+        `http://13.209.97.75:8080/api/auth/comment/{id}`,
         arg,
         // arg = comment:comment
         config
@@ -53,29 +53,100 @@ export const __addComment = createAsyncThunk(
     }
   }
 );
+// 댓글삭제
+export const __deleteComment = createAsyncThunk(
+  "DELETE_COMMENT",
+  async (arg, thunkAPI) => {
+    try {
+      await axios.delete(`http://13.209.97.75:8080/api/auth/comments/${arg}`, config);
+      return thunkAPI.fulfillWithValue(arg);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
 
+// 댓글수정
+export const __updateComment = createAsyncThunk(
+  "UPDATE_COMMENT",
+  async (arg, thunkAPI) => {
+    try {
+      const res = await axios.put(
+        `http://13.209.97.75:8080/api/auth/comments/${arg.id}`,
+        arg,
+        config
+      );
+      console.log(res.data.data);
+      return thunkAPI.fulfillWithValue(res.data.data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
 export const commentSlice = createSlice({
   name: "comment",
-  initialState:[{
-    id:"ds",
-    postId:0,
-    comments:""
-  }],
+  initialState:{
+    data: [],
+    isLoading: false,
+    error: null,
+  },
   reducers: {
     addComment: (state, action) => {
       state.push(action.payload);
     },
-    deleteComment: (state, action) => {
-      let index = state.findIndex(
-        (comment) => comment.id === action.payload
-      );
-      state.splice(index, 1);
-    },
-    updateComment: (state, action) => {
-      let index = state.findIndex((comment) => comment.id === action.payload.id);
-      state.splice(index, 1, action.payload);
-    },
   },
+  extraReducers:  (builder) => {
+    builder
+        .addCase(__deleteComment.pending, (state) => {
+            state.isLoading = true;
+            console.log("펜딩")
+        })
+        .addCase(__deleteComment.fulfilled, (state, action) => {
+            state.isLoading = false;
+            let index = state.findIndex(
+              (comment) => comment.id === action.payload
+            );
+            state.splice(index, 1);
+            state.isDelete = true;
+            console.log(state)
+        })
+        .addCase(__deleteComment.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+            console.log("에러")
+        });
+    builder
+        .addCase(__getCommnetsByPostId.pending, (state) => {
+            state.isLoading = true;
+        })
+        .addCase(__getCommnetsByPostId.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.post = action.payload;
+            console.log(state.post)
+        })
+        .addCase(__getCommnetsByPostId.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+       
+        });
+    builder
+        .addCase(__updateComment.pending, (state) => {
+            state.isLoading = true;
+        })
+        .addCase(__updateComment.fulfilled, (state, action) => {
+            state.isLoading = false;
+            let index = state.findIndex((comment) => comment.id === action.payload.id);
+            state.splice(index, 1, action.payload);
+            console.log(state.post)
+        })
+        .addCase(__updateComment.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+       
+        });
+
+   
+  }
 });
 
 export const { addComment, deleteComment, updateComment } = commentSlice.actions;
