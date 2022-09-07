@@ -130,6 +130,20 @@ export const postSlice = createSlice({
             state.error = action.payload;
        
         });
+    builder
+        .addCase(_updatePost.pending, (state) => {
+            state.isLoading = true;
+        })
+        .addCase(_updatePost.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.post = action.payload;
+            console.log(state.post)
+        })
+        .addCase(_updatePost.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+       
+        });
 
    
   }

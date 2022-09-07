@@ -3,19 +3,25 @@ import nextId from "react-id-generator";
 import { useState } from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
-import {signUp} from '../redux/modules/users'
+import {signUp,_postIdCheck} from '../redux/modules/users'
 import axios from "axios";
 const Sign = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [username, setuserName] = useState('')
+    const [nickname, setNickName] = useState('')
+    const [password, setPassword] = useState('')
+    const [passwordConfirm, setPasswordConfirm] = useState('')
+   
     const initialState = {
+        username:"",
         nickname:"",
         password:"",
         passwordConfirm:"",
     }
-
-    
     const [sign, setSign] = useState(initialState);
+    
+
 
     const onChangeHander = (e) => {
         const {name, value} = e.target;
@@ -23,14 +29,18 @@ const Sign = () => {
     }
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-    // if( sign.nickname.trim() === ""|| sign.password.trim() === ""|| sign.passwordConfirm.trim() === ""){
-    //     return alert ('모든 항목을 입력해주세요')
-    // };   
-    // if(sign.password !== sign.passwordConfirm){
-    //     return alert('비밀번호 확인이 일치하지 않습니다.')};
+    if( sign.nickname.trim() === ""|| sign.password.trim() === ""|| sign.passwordConfirm.trim() === ""){
+        return alert ('모든 항목을 입력해주세요')
+    };   
+    if(sign.password !== sign.passwordConfirm){
+        return alert('비밀번호 확인이 일치하지 않습니다.')};
     const data = await axios.post(
-        "http://52.79.247.187:8080/api/member/signup",
-        sign
+        "http://13.209.97.75:8080/api/member/signup",
+        sign,{
+            headers:{
+                "Content-Type": "application/json",
+            }
+        }
     );
     console.log(data)
     if(data.success){
@@ -38,20 +48,21 @@ const Sign = () => {
     }else{
         window.alert(data.error.message)
     }
-   
+
+    
 }   
     return (
         <div>
             <StSigninContainer  onSubmit={onSubmitHandler}>
                  <h1>회원가입</h1>
                 <StInputBox>
-                    {/* <p>아이디</p>
+                    <p>아이디</p>
                     <div>
                     <StInput type="text" placeholder='사용할 아이디를 입력해주세요'
                             name='username' value={sign.username} onChange={onChangeHander} 
                              />
-                    <button>중복확인</button>
-                    </div> */}
+                    <button onClick={() => dispatch(_postIdCheck(sign.username))}>중복확인</button>
+                    </div>
                 </StInputBox>
                 <StInputBox>
                     <p>닉네임</p>
