@@ -16,10 +16,8 @@ const Detail = () => {
     
     const { id } = useParams()
     const posts = useSelector((state) => state.postSlice.post)
-
-    useEffect(() => {
-        dispatch(_getPost());
-    }, [dispatch]);
+    
+    
     //   새로고침시 화면 안뜸
     let postt = posts.find((post) => {
 
@@ -62,7 +60,7 @@ const Detail = () => {
                     <StTitName>
 
                         <h1 >{postt.title}</h1>
-                        <span> <p> {like
+                        <div> <p> {like
                         ? (<Like size="20px" style={{color:'red'}} bold onClick={likeClick}>
                         ♥
                       </Like>
@@ -70,7 +68,7 @@ const Detail = () => {
                       <Like size="20px" bold onClick={likeClick}>
                         ♡
                       </Like> 
-                        )} </p></span>
+                        )} </p>{postt.count}</div>
 
                     </StTitName>
                 </div>
