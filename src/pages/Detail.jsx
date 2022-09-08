@@ -57,7 +57,7 @@ const Detail = () => {
          }
          dispatch(_deletePost(payload))
          dispatch(deletePost(payload))
-         navigate('/')
+         navigate('/main')
         
         
     }
