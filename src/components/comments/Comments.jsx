@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import nextId from "react-id-generator";
 import { useParams } from "react-router-dom";
-import { addComment } from "../../redux/modules/commentSlice";
+import { addComment, __getCommnetsByPostId } from "../../redux/modules/commentSlice";
 import { __addComment } from "../../redux/modules/commentSlice";
 import Com from "./Com";
 const Comments = () => {
@@ -11,22 +11,32 @@ const Comments = () => {
     const [review, setReview] = useState({});
     let { id } = useParams();
     // console.log(id)
+    useEffect(() => {
+        dispatch(__getCommnetsByPostId(id));
+      }, [dispatch]);
+    const PostId = useSelector((state)=>state.postSlice.post)
+    console.log(PostId)
     const comments = useSelector((state) => state.commentSlice.comments);
-    // console.log(useSelector((state) => state))
+    // console.log(useSelector((state) => state.commentSlice.comments))
     const onChangeHandler = (event) => {
         const comm = event.target.value;
         setReview({ ...review, postId: id, comment: comm });
         console.log(review)
     };
+
     const postId = review.postId
-    console.log(postId)
+
+   
     let commentList = comments.filter((comment) => {
-        return String(comment.postId) === id;  
+        return String(comment.id) === id;
+        
+
     });
     console.log(commentList)
     const payload = {
-        postId:postId,
-        id:id,
+
+        postId:id,
+
         comment:review.comment
     }
     return (
