@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux/";
-import { updateComment } from "../../redux/modules/commentSlice"
+import { __updateComment} from "../../redux/modules/commentSlice"
 import styled from "styled-components";
-const Commentmodal = ({ ment, close }) => {
+const Commentmodal = ({ ment, close ,arg}) => {
   // console.log(ment)
   let dispatch = useDispatch();
   const initialState = {
@@ -14,7 +14,15 @@ const Commentmodal = ({ ment, close }) => {
   // console.log(ment1)
   const [desc, setDesc] = useState(ment1.comment);
  
-
+ const payload = {
+  nickname:ment.nickname,
+  postId:arg,
+  id:ment.id,
+  comment:desc,
+  
+ }
+console.log(ment)
+console.log(payload)
   return (
     <>
       <div className="black-bg show-modal">
@@ -36,7 +44,7 @@ const Commentmodal = ({ ment, close }) => {
             <Button
               className="btn btn-danger"
               onClick={() => {
-                dispatch(updateComment({ ...ment,comment: desc }));
+                dispatch(__updateComment(payload));
                 close();
               }}
             >

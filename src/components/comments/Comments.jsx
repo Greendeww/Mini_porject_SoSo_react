@@ -23,11 +23,9 @@ const Comments = () => {
         console.log(review)
     };
 
-    const postId = review.postId
 
-   
     // let commentList = comments.filter((comment) => {
-    //     return String(comment.id) === id;
+    //     return String(comment.id) === id;})
         
 
 
@@ -52,7 +50,8 @@ const Comments = () => {
                 </StCommentBox>
                 <div>
                     {comments.map((commet) => {
-                        return <Com key={commet.id} ment={commet} id = {id} />;
+                        console.log(commet)
+                        return <Com key={commet.id} ment={commet} arg = {id} />;
                     })}
                 </div>
             </div>
