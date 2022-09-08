@@ -70,8 +70,8 @@ function UpdatePost(){
         const payload = {
             id:id,
             data: formData,
-            token : token,
-            refresh : refresh
+            // token : token,
+            // refresh : refresh
         }
         
         dispatch(_updatePost(payload))

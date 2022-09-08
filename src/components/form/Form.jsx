@@ -41,7 +41,7 @@ const Form = () => {
                 RefreshToken: getCookie("REFRESH_TOKEN")
             }
         });
-        navigate("/");
+        navigate("/main");
         return res.data;
         
         // setTitle("");
