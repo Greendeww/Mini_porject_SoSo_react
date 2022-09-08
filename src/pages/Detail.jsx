@@ -21,14 +21,14 @@ const Detail = () => {
 
     // const isdeleted = useSelector((state) => state.postSlice.isDelete)
     
-    const posts = useSelector((state) => state.postSlice.post)
-    console.log("제발")
+    const posts = useSelector((state) => state?.postSlice?.post)
+    
 
     useEffect(() => {
         setTimeout(() =>{dispatch(_getPost());},1000)
     }, [dispatch]);
     //   새로고침시 화면 안뜸
-    let postt = posts.find((post) => {
+    let postt = posts?.find((post) => {
 
         return String(post.id) === id;
     });
@@ -84,7 +84,7 @@ const Detail = () => {
                     </div>
                     <StTitName>
 
-                        <h1 >제목:{postt.title} </h1><span>작성자:{postt.member.nickname}</span>
+                        <h1 >제목:{postt?.title} </h1><span>작성자:{postt?.member?.nickname}</span>
                         {/* <div> <p> {like
                         ? (<Like size="20px" style={{color:'red'}} bold onClick={likeClick}>
                         ♥

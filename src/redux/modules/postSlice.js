@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
+import { getCookie } from "../../shared/cookie";
 import axios from "axios";
 
 const initialState = {
@@ -35,8 +36,8 @@ export const _updatePost = createAsyncThunk(
                 payload.data,{
                     headers:{
                         "Content-Type": "multipart/form",
-                        Authorization: payload.token,
-                        RefreshToken: payload.refresh
+                        Authorization: getCookie("ACESS_TOKEN"),
+                        RefreshToken: getCookie("REFRESH_TOKEN")
                     }
                     
                 }
@@ -119,36 +120,35 @@ export const postSlice = createSlice({
     builder
         .addCase(_deletePost.pending, (state) => {
             state.isLoading = true;
-            console.log("펜딩")
+          
         })
         .addCase(_deletePost.fulfilled, (state, action) => {
             state.isLoading = false;
             const deleteState = state.post.findIndex(post => post.id === action.payload)
             state.post.slice(deleteState,1)
             state.isDelete = true;
-            console.log(state)
+        
         })
         .addCase(_deletePost.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
-            console.log("에러")
+           
         });
     builder
         .addCase(_getPost.pending, (state) => {
             state.isLoading = true;
-            console.log("펜딩")
+           
         })
         .addCase(_getPost.fulfilled, (state, action) => {
             state.isLoading = false;
 
             state.post = action.payload;
-            console.log("작동")
-
+            
         })
         .addCase(_getPost.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
-            console.log("에러")
+           
        
         });
     builder

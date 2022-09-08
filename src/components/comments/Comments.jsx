@@ -18,12 +18,14 @@ const Comments = () => {
         setReview({ ...review, postId: id, comment: comm });
         console.log(review)
     };
-    
+    const postId = review.postId
+    console.log(postId)
     let commentList = comments.filter((comment) => {
-        return String(comment.postId) === id;
-        
+        return String(comment.postId) === id;  
     });
+    console.log(commentList)
     const payload = {
+        postId:postId,
         id:id,
         comment:review.comment
     }

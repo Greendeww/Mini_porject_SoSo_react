@@ -21,7 +21,7 @@ const HomeContents = () => {
 
     const {isLoading, error} = useSelector((state) => state?.postSlice)
     const post = useSelector((state)=> state.postSlice.post)
-    console.log(useSelector((state) => state?.postSlice.data))  
+  
   
     useEffect(() => {
       dispatch(_getPost());
