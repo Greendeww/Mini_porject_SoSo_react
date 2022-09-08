@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
+import { getCookie } from "../../shared/cookie";
 
 const accessToken = localStorage.getItem("Authorization")
   ? localStorage.getItem("Authorization")
@@ -23,7 +23,7 @@ export const __getCommnetsByPostId = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `url/api/auth/comment/${arg}`  
+        `http://54.180.31.216/api/auth/comment`  
         // arg 포스트 아이디
       );
       console.log(data);
@@ -37,14 +37,16 @@ export const __getCommnetsByPostId = createAsyncThunk(
 // 댓글추가
 export const __addComment = createAsyncThunk(
   "ADD_COMMENT",
-  async (arg, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
       const { data } = await axios.post(
-        `http://13.209.97.75:8080/api/auth/comment/{id}`,
-        arg,
-        // arg = comment:comment
-        config
-        // config = 토큰
+        `http://54.180.31.216/api/auth/comment/${payload.id}`,
+        payload,
+               { headers:{
+                        "Content-Type": "application/json",
+                         Authorization: getCookie("ACESS_TOKEN"),
+                         RefreshToken: getCookie("REFRESH_TOKEN"),
+                }}
       );
       console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
@@ -56,10 +58,10 @@ export const __addComment = createAsyncThunk(
 // 댓글삭제
 export const __deleteComment = createAsyncThunk(
   "DELETE_COMMENT",
-  async (arg, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://13.209.97.75:8080/api/auth/comments/${arg}`, config);
-      return thunkAPI.fulfillWithValue(arg);
+      await axios.delete(`http://54.180.31.216/api/auth/comments/${payload.id}`, config);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
     }
@@ -72,7 +74,7 @@ export const __updateComment = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const res = await axios.put(
-        `http://13.209.97.75:8080/api/auth/comments/${arg.id}`,
+        `http://54.180.31.216/api/auth/comments/${arg.id}`,
         arg,
         config
       );
