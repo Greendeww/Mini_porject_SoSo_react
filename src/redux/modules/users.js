@@ -22,7 +22,7 @@ export const __userLogin = createAsyncThunk(
                     setCookie("ACESS_TOKEN",data.headers.authorization,1)
                     setCookie("REFRESH_TOKEN",data.headers.refreshtoken)
                     localStorage.setItem("nickname",data.data.data.nickname);
-                    window.location.replace("/");
+                    window.location.replace("/main");
                  }  
                  
                  return thunkApI.fulfillWithValue(data.data.username);         

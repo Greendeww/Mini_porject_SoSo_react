@@ -11,7 +11,7 @@ const Header = () => {
   const logoutHandler = () => {
     dispatch(_logout())
     dispatch(logout())
-    navigate('/login')
+    navigate('/')
     console.log("작동")
   }
 
@@ -19,7 +19,7 @@ const Header = () => {
     <HeaderContainer>
       <StLogo
         onClick={() => {
-          navigate("/");
+          navigate("/main");
         }}
       >
         SoSo
