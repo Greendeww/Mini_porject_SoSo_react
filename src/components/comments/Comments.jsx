@@ -14,8 +14,7 @@ const Comments = () => {
     useEffect(() => {
         dispatch(__getCommnetsByPostId(id));
       }, [dispatch]);
-    const PostId = useSelector((state)=>state.postSlice.post)
-    console.log(PostId)
+   
     const comments = useSelector((state) => state.commentSlice.comments);
     // console.log(useSelector((state) => state.commentSlice.comments))
     const onChangeHandler = (event) => {
@@ -24,10 +23,10 @@ const Comments = () => {
         console.log(review)
     };
    
-    let commentList = comments.filter((comment) => {
-        return String(comment.id) === id;
+    // let commentList = comments.filter((comment) => {
+    //     return String(comment.id) === id;
         
-    });
+    // });
     const payload = {
         postId:id,
         comment:review.comment
@@ -45,8 +44,8 @@ const Comments = () => {
                     }}>댓글달기</StButton>
                 </StCommentBox>
                 <div>
-                    {commentList.map((commet) => {
-                        return <Com key={commet.id} ment={commet} />;
+                    {comments.map((commet) => {
+                        return <Com key={commet.id} ment={commet} id = {id} />;
                     })}
                 </div>
             </div>
