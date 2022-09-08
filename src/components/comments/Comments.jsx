@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import nextId from "react-id-generator";
 import { useParams } from "react-router-dom";
 import { addComment } from "../../redux/modules/commentSlice";
+import { __addComment } from "../../redux/modules/commentSlice";
 import Com from "./Com";
 const Comments = () => {
     const dispatch = useDispatch()
@@ -11,9 +12,10 @@ const Comments = () => {
     let { id } = useParams();
     // console.log(id)
     const comments = useSelector((state) => state.commentSlice.comments);
+    // console.log(useSelector((state) => state))
     const onChangeHandler = (event) => {
         const comm = event.target.value;
-        setReview({ ...review, id: nextId(), postId: id, comment: comm });
+        setReview({ ...review, postId: id, comment: comm });
         console.log(review)
     };
     
@@ -21,7 +23,10 @@ const Comments = () => {
         return String(comment.postId) === id;
         
     });
-
+    const payload = {
+        id:id,
+        comment:review.comment
+    }
     return (
         <>
             <div>
@@ -31,7 +36,7 @@ const Comments = () => {
                         name="comment"
                     />
                     <StButton onClick={() => {
-                        dispatch(addComment(review))
+                        dispatch(__addComment(payload))
                     }}>댓글달기</StButton>
                 </StCommentBox>
                 <div>
