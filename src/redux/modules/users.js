@@ -80,7 +80,9 @@ export const _logout = createAsyncThunk(
     "users/logout",
     async (payload, thunkAPI) => {
         try{
+
             const data = await axios.delete("http://54.180.31.216/api/auth/member/logout",{
+
                 headers:{
                          Authorization: getCookie("ACESS_TOKEN"),
                          RefreshToken: getCookie("REFRESH_TOKEN"),
