@@ -76,7 +76,7 @@ function UpdatePost(){
         
         dispatch(_updatePost(payload))
         dispatch(updatePost(payload))
-        navigate("/");
+        // navigate("/");
         for(let value of formData.values()) {
             console.log(value);
             }
@@ -99,7 +99,7 @@ function UpdatePost(){
                         <h1>수정페이지</h1>
                         <div>
                         <StButton onClick={onUpdateHandler}>수정하기</StButton>
-                        <StButton onClick={()=>navigate('/')}>이전으로</StButton>
+                        <StButton onClick={()=>navigate('/main')}>이전으로</StButton>
                         </div>
                     </StTitButton>
                     <StImg>
@@ -172,7 +172,7 @@ const StModalBox = styled.div`
   padding: 15px;
   margin: 0 auto;
   border-radius: 0.3rem;
-  background-color:#eefff5;
+  background-color:#fff;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-show 0.3s;
   overflow: hidden;
@@ -187,7 +187,7 @@ const StButton = styled.button`
     width: 150px;
     height: 40px;
     border: none;
-    background-color:#0091ff;
+    background-color:#3858e9;
     color: #fff;
     border-radius: 10px;
     cursor: pointer;

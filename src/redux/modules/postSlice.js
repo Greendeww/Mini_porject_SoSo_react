@@ -41,6 +41,7 @@ export const _updatePost = createAsyncThunk(
                     
                 }
             )
+            window.location.replace('/main')
             return thunkApI.fulfillWithValue(data.data);
             console.log(data)
         }catch(error){
@@ -55,9 +56,7 @@ export const _deletePost = createAsyncThunk(
         try{
             const data = await axios.delete(
 
-                `http://54.180.31.216/api/auth/post/${payload.id}`
-
-                
+                `http://54.180.31.216/api/auth/post/${payload.id}`  
                 ,{
                     headers:{
                         Authorization: payload.token,
@@ -78,7 +77,6 @@ export const _getLike = createAsyncThunk(
     async(payload, thunkApI) => {
         try {
             const data = await axios.get("http://13.209.97.75:8080/api/auth/like/{id}");
-           
             // console.log(data)
             return thunkApI.fulfillWithValue(data.data);
         }catch(error){

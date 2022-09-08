@@ -41,7 +41,7 @@ const HomeContents = () => {
                 return(
                 <StConBox key={posts.id} >
                     <StImgBox>
-                    <Link to={"/detail/"+posts.id}>
+                    <Link to={"/main/detail/"+posts.id}>
                         <ImageSize>
                             <StImg src={posts.imageUrl} />
                         </ImageSize>
