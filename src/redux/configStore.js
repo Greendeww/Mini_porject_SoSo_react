@@ -1,12 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-
-import contents from "../redux/modules/contents"
+import postSlice from "./modules/postSlice"
+import users from "./modules/users";
+import commentSlice from "./modules/commentSlice";
 
 const store = configureStore({
   reducer: {
-    contents:contents.reducer
-    
-  }
+    users: users.reducer,
+    commentSlice: commentSlice.reducer,
+    postSlice: postSlice.reducer
+  },
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ 
+              serializableCheck: false, }),
 });
 
 export default store;

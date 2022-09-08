@@ -1,22 +1,35 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { _logout,logout } from "../../redux/modules/users";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    dispatch(_logout())
+    dispatch(logout())
+    navigate('/')
+    console.log("작동")
+  }
 
   return (
     <HeaderContainer>
       <StLogo
         onClick={() => {
-          navigate("/");
+          navigate("/main");
         }}
       >
         SoSo
       </StLogo>
         <StHeaderBox>
+          <Link to={"/post"}>
             <StButton>게시물 작성</StButton>
-      <p>로그아웃</p>
+            </Link>
+      <Logout onClick={logoutHandler}>로그아웃
+      </Logout>
       </StHeaderBox>
     </HeaderContainer>
   );
@@ -32,7 +45,6 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   padding: 20px;
   background-color: #fff;
-  margin-bottom: 50px;
 `;
 const StHeaderBox= styled.div`
   display: flex;
@@ -52,5 +64,16 @@ const StButton = styled.button`
     color: #fff;
     border-radius: 10px;
     cursor: pointer;
-    
+    transition: all 0.3s;
+    :hover{
+        background-color: #fff;
+        color:#000
+    } 
+`
+const Logout = styled.p`
+    &:hover{
+   color: blue; 
+   cursor: pointer;
+   }
+  
 `
