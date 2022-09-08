@@ -57,7 +57,7 @@ const Detail = () => {
          }
          dispatch(_deletePost(payload))
          dispatch(deletePost(payload))
-         navigate('/')
+         navigate('/main')
         
         
     }
@@ -85,7 +85,7 @@ const Detail = () => {
                     <StTitName>
 
 
-                        <h1 >제목:{postt?.title} </h1><span>작성자:{postt?.member.nickname}</span>
+                        <h1 >제목:{postt?.title} </h1><span>작성자:{postt?.member?.nickname}</span>
 
                         {/* <div> <p> {like
                         ? (<Like size="20px" style={{color:'red'}} bold onClick={likeClick}>
