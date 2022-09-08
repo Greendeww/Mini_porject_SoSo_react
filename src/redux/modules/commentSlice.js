@@ -60,7 +60,12 @@ export const __deleteComment = createAsyncThunk(
   "DELETE_COMMENT",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://54.180.31.216/api/auth/comments/${payload.id}`, config);
+      await axios.delete(`http://54.180.31.216/api/auth/comments/${payload.postId}`,payload.id,
+      { headers:{
+        "Content-Type": "application/json",
+         Authorization: getCookie("ACESS_TOKEN"),
+         RefreshToken: getCookie("REFRESH_TOKEN"),
+}});
       return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
