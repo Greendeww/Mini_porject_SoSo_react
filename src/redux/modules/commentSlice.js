@@ -23,7 +23,7 @@ export const __getCommnetsByPostId = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `http://54.180.31.216/api/auth/comment`  
+        `http://54.180.31.216/api/auth/comment/${arg}`  
         // arg 포스트 아이디
       );
       console.log(data);
@@ -107,6 +107,27 @@ export const commentSlice = createSlice({
       state.splice(index, 1, action.payload);
     },
   },
+
+  extraReducers:  (builder) => {
+
+    builder
+        .addCase(__getCommnetsByPostId.pending, (state) => {
+            state.isLoading = true;
+            console.log("펜딩")
+        })
+        .addCase(__getCommnetsByPostId.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.comments = action.payload;
+            console.log("작동")
+
+        })
+        .addCase(__getCommnetsByPostId.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+            console.log("에러")
+       
+        });
+      }
 });
 
 export const { addComment, deleteComment, updateComment } = commentSlice.actions;
