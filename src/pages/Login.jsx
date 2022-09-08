@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import nextId from "react-id-generator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import {__userLogin} from '../redux/modules/users'
 import { getCookie } from "../shared/cookie";
 const Login = () => {   
-
+    console.log(useSelector((state) => state))
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const initialstate = {
@@ -19,7 +19,6 @@ const Login = () => {
         const {name, value} = e.target;
         setUser({...user, [name]: value})
     };
-
     return (
         <Back>
         <StLoginContainer  >
@@ -41,7 +40,7 @@ const Login = () => {
                 if (user.username.trim() === "" || user.password.trim() === "")
                 return alert("아이디와 비밀번호를 입력하세요.");
                 dispatch(__userLogin(user));
-                navigate('/')
+                // navigate('/')
             }}>로그인</StButton>
         </StLoginContainer>
         </Back>

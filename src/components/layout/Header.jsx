@@ -8,6 +8,13 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const logoutHandler = () => {
+    dispatch(_logout())
+    dispatch(logout())
+    navigate('/login')
+    console.log("작동")
+  }
+
   return (
     <HeaderContainer>
       <StLogo
@@ -21,7 +28,8 @@ const Header = () => {
           <Link to={"/post"}>
             <StButton>게시물 작성</StButton>
             </Link>
-      <p onCLick={() => {dispatch(_logout); dispatch(logout); navigate('/')}}>로그아웃</p>
+      <Logout onClick={logoutHandler}>로그아웃
+      </Logout>
       </StHeaderBox>
     </HeaderContainer>
   );
@@ -60,6 +68,12 @@ const StButton = styled.button`
     :hover{
         background-color: #fff;
         color:#000
-    }
-    
+    } 
+`
+const Logout = styled.p`
+    &:hover{
+   color: blue; 
+   cursor: pointer;
+   }
+  
 `

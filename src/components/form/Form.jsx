@@ -34,7 +34,7 @@ const Form = () => {
     form.append("title", titleblob);
     console.log(titleblob);
     form.append("imageUrl", imageUrl);
-     const res = await axios.post('http://13.209.97.75:8080/api/auth/post',form,{
+     const res = await axios.post('http://54.180.31.216/api/auth/post',form,{
             headers:{
                 "Content-Type": "multipart/form",
                 Authorization: getCookie("ACESS_TOKEN"),
