@@ -71,8 +71,8 @@ const Detail = () => {
                         <Img>
                             <StButton onClick={onClickDeleteHandler}>삭제하기</StButton>
 
-                            <StButton onClick={() => navigate('/update/'+postt.id)}>수정하기</StButton>
-                            <Link to="/">
+                            <StButton onClick={() => navigate('/main/update/'+postt.id)}>수정하기</StButton>
+                            <Link to="/main">
                                 <StButton >이전으로</StButton>
                             </Link>
                         </Img>

@@ -105,7 +105,7 @@ const Sign = () => {
     );
     console.log(data)
     if(data.data.success){
-        navigate('/login');
+        navigate('/');
     }else{
         window.alert(data.error.message)
     }
