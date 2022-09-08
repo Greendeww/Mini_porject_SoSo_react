@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { _getPost } from '../redux/modules/postSlice';
-import { _updatePost } from '../redux/modules/postSlice';
+import { _updatePost,updatePost } from '../redux/modules/postSlice';
 import { getCookie } from '../shared/cookie';
 
 function UpdatePost(){
@@ -75,6 +75,7 @@ function UpdatePost(){
         }
         
         dispatch(_updatePost(payload))
+        dispatch(updatePost(payload))
         navigate("/");
         for(let value of formData.values()) {
             console.log(value);
@@ -96,14 +97,14 @@ function UpdatePost(){
                 <form >
                     <StTitButton >
                         <h1>수정페이지</h1>
-                        <StImg>
-                        <img className="img" alt="" src={fileImage}></img>
-                        </StImg>
                         <div>
                         <StButton onClick={onUpdateHandler}>수정하기</StButton>
                         <StButton onClick={()=>navigate('/')}>이전으로</StButton>
                         </div>
                     </StTitButton>
+                    <StImg>
+                        <Img className="img" alt="" src={fileImage}></Img>
+                    </StImg>
                     <StImgBox>
                     {/* <div style={{width:'700px', height:"560px",marginTop:'30px',marginBottom:'50px', marginLeft:'60px',border:'2px solid black'}}>
                             <div interval={null}>
@@ -120,8 +121,9 @@ function UpdatePost(){
                             })}
                             </div>
                     </div> */}
+                    <Div>
                         <label htmlFor="imageUrl">
-                            <input
+                            <ImageInput
                             name="image"
                             type="file"
                             accept=".gif, .jpg, .png"
@@ -130,20 +132,20 @@ function UpdatePost(){
                             onChange={onChangeFileHandler}
                             />
                         </label>
+                    </Div>
                     </StImgBox>
                     <StTitName>
                         <h1>
                             {list.title}
                         </h1>
-                        <input
-                            placeholder="제목"
+                        <InputText
+                            placeholder="수정할 제목을 입력해주세요"
                             name="title"
                             type="text"
                             value={title||''}
                             onChange={onChangeHandler}
                             // required
                         />
-                        <p>❤️ 2</p>
                     </StTitName>
                 </form>
             </StModalBox>
@@ -170,7 +172,7 @@ const StModalBox = styled.div`
   padding: 15px;
   margin: 0 auto;
   border-radius: 0.3rem;
-  background-color: #fff;
+  background-color:#eefff5;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-show 0.3s;
   overflow: hidden;
@@ -185,7 +187,7 @@ const StButton = styled.button`
     width: 150px;
     height: 40px;
     border: none;
-    background-color: #3858e9;
+    background-color:#0091ff;
     color: #fff;
     border-radius: 10px;
     cursor: pointer;
@@ -199,6 +201,7 @@ const StButton = styled.button`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 50px;
     `
     const StImgBox = styled.div`
         margin: 0 auto;
@@ -212,6 +215,28 @@ const StButton = styled.button`
     height: 310px;
     background-color: #fff;
     border: none;
+    margin: 0 auto;  
+    `
+    const Img = styled.img`
+    width: 300px;
+    height: 310px;
+    background-color: #fff;
+    border: 1px solid #eee;
     margin: 0 auto;
-        
+    `
+    const ImageInput = styled.input`
+        color:red;
+        margin: auto;
+        margin-left: 70px;
+        /* display:none; */
+    `
+    const Div = styled.div`
+        margin-top:20px;
+    `
+    const InputText = styled.input`
+        display:block;
+        width:280px;
+        height: 25px;
+        border: 2px solid #e2e2e2;
+      
     `

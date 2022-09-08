@@ -19,10 +19,10 @@ const Detail = () => {
     const navigate = useNavigate();
     const { id } = useParams()
 
-    const isdeleted = useSelector((state) => state.postSlice.isDelete)
+    // const isdeleted = useSelector((state) => state.postSlice.isDelete)
     
     const posts = useSelector((state) => state.postSlice.post)
-
+    console.log("제발")
 
     useEffect(() => {
         setTimeout(() =>{dispatch(_getPost());},1000)
@@ -56,6 +56,7 @@ const Detail = () => {
             refresh: refresh
          }
          dispatch(_deletePost(payload))
+         dispatch(deletePost(payload))
          navigate('/')
         
         

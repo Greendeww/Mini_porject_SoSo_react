@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { deleteCookie, setCookie ,  getCookie} from "../../shared/cookie";
+import { useNavigate } from "react-router-dom";
 
+//로그인기능
 
 export const __userLogin = createAsyncThunk(
     "user/userLogin",
@@ -12,26 +14,24 @@ export const __userLogin = createAsyncThunk(
                 "http://54.180.31.216/api/member/login",
                 payload
             )
+                if(data.data.success === false){
                     console.log(data)
+                    alert(data.data.error.message)
+                }else{
                     setCookie("isLogin",data.headers.authorization);
                     setCookie("ACESS_TOKEN",data.headers.authorization,1)
                     setCookie("REFRESH_TOKEN",data.headers.refreshtoken)
                     localStorage.setItem("nickname",data.data.data.nickname);
-                    if(data.data.success === false){
-                        console.log(data)
-                        alert(data.data.error.message)
-                 } 
+                    window.location.replace("/");
+                 }  
+                 
                  return thunkApI.fulfillWithValue(data.data.username);         
-   
-            
-               
-            
-            
         }catch(error){
             return thunkApI.rejectWithValue(error.message);
         }
     }
 );
+//중복체크(미구현)
 export const _postIdCheck = createAsyncThunk(
     'users/idCheck',
     async (username, thunkAPI) => {
@@ -53,6 +53,7 @@ export const _postIdCheck = createAsyncThunk(
         }
     }
 )
+//중복체크(미구현)
 export const _postNickdCheck = createAsyncThunk(
     'users/NickCheck',
     async (nickname, thunkAPI) => {
@@ -74,29 +75,29 @@ export const _postNickdCheck = createAsyncThunk(
         }
     }
 )
+//로그아웃
 export const _logout = createAsyncThunk(
     "users/logout",
     async (payload, thunkAPI) => {
         try{
-            const data = await axios.post("http://54.180.31.216/api/auth/member/logout",{
+
+            const data = await axios.delete("http://54.180.31.216/api/auth/member/logout",{
+
                 headers:{
-                         'Content-Type': `application/json`,
                          Authorization: getCookie("ACESS_TOKEN"),
-                         RefreshToken: getCookie("REFRESH_TOKEN")
+                         RefreshToken: getCookie("REFRESH_TOKEN"),
                 }
             })
+            deleteCookie("ACESS_TOKEN")
+            deleteCookie("REFRESH_TOKEN")
+            deleteCookie("isLogin")
+            return thunkAPI.fulfillWithValue(data.data)
         }catch(error){
-
+            return thunkAPI.rejectWithValue(error);
         }
     }
 )
-//요청 보낼 때 어썰라이즌이랑 리프래시 둘라 보내기
 
-
-//로그아웃 기능(미완성)
-
-
-//로그인 기능
 export const users = createSlice({
     name:"users",
     initialState:{
@@ -105,12 +106,14 @@ export const users = createSlice({
         error: null,
         isLoading:false,
     },
-
+    //로그아웃 리듀서에서 진행하기
     reducers:{
-        logout(state) {
+        logout(state,action) {
             deleteCookie("ACESS_TOKEN")
             deleteCookie("REFRESH_TOKEN")
-            deleteCookie("username")
+            deleteCookie("isLogin")
+            localStorage.clear()
+            console.log("작동")
         }
     },
 

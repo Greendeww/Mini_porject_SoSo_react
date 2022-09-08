@@ -14,8 +14,8 @@ export const _getPost = createAsyncThunk(
         try {
             const data = await axios.get("http://54.180.31.216/api/auth/post");
            
-            // console.log(data)
-            return thunkApI.fulfillWithValue(data.data);
+            console.log(data.data)
+            return thunkApI.fulfillWithValue(data.data.data);
         }catch(error){
             return thunkApI.rejectWithValue(error);
         }
@@ -57,8 +57,8 @@ export const _deletePost = createAsyncThunk(
 
                 `http://54.180.31.216/api/auth/post/${payload.id}`
 
-                ,
-                payload.id,{
+                
+                ,{
                     headers:{
                         Authorization: payload.token,
                         RefreshToken: payload.refresh
@@ -108,15 +108,13 @@ export const postSlice = createSlice({
     },
     deletePost(state,action){
         console.log(state)
-        let index = state.post.findIndex(post => post.id === action.payload)
+        let index = state.post.findIndex(post => post.id === action.payload.id)
         state.post.slice(index,1)
         console.log(state)
-        axios.delete(`http://54.180.31.216/api/auth/post/api/auth/post/${action.payload}`, action.payload)
     },
     updatePost(state,action){
         let index = state.post.findIndex(post => post.id === action.payload.id);
         state.post.slice(index,1,action.payload)
-        axios.patch(`http://54.180.31.216/api/auth/post/api/auth/post/${action.payload.id}`,action.payload)
     }
   },
   extraReducers:  (builder) => {
@@ -140,15 +138,19 @@ export const postSlice = createSlice({
     builder
         .addCase(_getPost.pending, (state) => {
             state.isLoading = true;
+            console.log("펜딩")
         })
         .addCase(_getPost.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.post = action.payload.data;
-            console.log(state.post)
+
+            state.post = action.payload;
+            console.log("작동")
+
         })
         .addCase(_getPost.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
+            console.log("에러")
        
         });
     builder

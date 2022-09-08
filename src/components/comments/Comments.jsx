@@ -11,7 +11,6 @@ const Comments = () => {
     let { id } = useParams();
     // console.log(id)
     const comments = useSelector((state) => state.commentSlice.comments);
-    console.log(comments)
     const onChangeHandler = (event) => {
         const comm = event.target.value;
         setReview({ ...review, id: nextId(), postId: id, comment: comm });

@@ -96,7 +96,7 @@ const Sign = () => {
         return alert('형식을 확인해주세요')
     }
     const data = await axios.post(
-        "http://13.209.97.75:8080/api/member/signup",
+        "http://54.180.31.216/api/member/signup",
         userInfo,{
             headers:{
                 "Content-Type": "application/json",

@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux/";
 import { deleteComment } from "../../redux/modules/commentSlice";
 import { useState } from "react";
 import Commentmodal from "./Commentmodal";
-const Com = ({ ment }) => {
+const Com = ({ ment, id }) => {
+  console.log(id)
   const dispatch = useDispatch();
   let [modal, setModal] = useState(false);
   const close = () => {

@@ -7,6 +7,7 @@ import Sign from "./pages/Sign";
 import Detail from "./pages/Detail"
 // import { updatePost } from "./redux/modules/postSlice";
 import UpdatePost from "./pages/UpdatePost";
+import { PrivateRoute } from "./shared/helpers";
 function App() {
 
   return (
