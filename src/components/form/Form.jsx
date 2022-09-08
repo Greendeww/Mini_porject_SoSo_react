@@ -86,7 +86,7 @@ const FormWrap = styled.div`
   flex-direction: column;
   gap: 10px;
   border-radius: 20px;
-  background-color: #90B4CE;
+  background-color: #eee;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   color: #D8EEFE;
   label {
@@ -95,7 +95,7 @@ const FormWrap = styled.div`
     height: 40px;
     font-size: 25px;
     font-weight: 700;
-    color: #fff;
+    color: #444;
   }
   input {
     width: 100%;
@@ -116,7 +116,7 @@ const FormWrap = styled.div`
   .img {
     width: 300px;
     height: 310px;
-    background-color: #fff;
+    background-color: #999;
     border: none;
     margin: 0 auto;
   }
@@ -142,7 +142,7 @@ const FormWrap = styled.div`
   }
   .icon {
     font-size: 40px;
-    fill: #fff;
+    fill: #333;
     margin: 0 auto;
     transition: all 0.4s;
     :hover {

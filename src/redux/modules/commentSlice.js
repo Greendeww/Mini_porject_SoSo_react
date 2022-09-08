@@ -94,59 +94,17 @@ export const commentSlice = createSlice({
     addComment: (state, action) => {
       state.push(action.payload);
     },
+    deleteComment: (state, action) => {
+      let index = state.findIndex(
+        (comment) => comment.id === action.payload
+      );
+      state.splice(index, 1);
+    },
+    updateComment: (state, action) => {
+      let index = state.findIndex((comment) => comment.id === action.payload.id);
+      state.splice(index, 1, action.payload);
+    },
   },
-  extraReducers:  (builder) => {
-    builder
-        .addCase(__deleteComment.pending, (state) => {
-            state.isLoading = true;
-            console.log("펜딩")
-        })
-        .addCase(__deleteComment.fulfilled, (state, action) => {
-            state.isLoading = false;
-            let index = state.findIndex(
-              (comment) => comment.id === action.payload
-            );
-            state.splice(index, 1);
-            state.isDelete = true;
-            console.log(state)
-        })
-        .addCase(__deleteComment.rejected, (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-            console.log("에러")
-        });
-    builder
-        .addCase(__getCommnetsByPostId.pending, (state) => {
-            state.isLoading = true;
-        })
-        .addCase(__getCommnetsByPostId.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.post = action.payload;
-            console.log(state.post)
-        })
-        .addCase(__getCommnetsByPostId.rejected, (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-       
-        });
-    builder
-        .addCase(__updateComment.pending, (state) => {
-            state.isLoading = true;
-        })
-        .addCase(__updateComment.fulfilled, (state, action) => {
-            state.isLoading = false;
-            let index = state.findIndex((comment) => comment.id === action.payload.id);
-            state.splice(index, 1, action.payload);
-            console.log(state.post)
-        })
-        .addCase(__updateComment.rejected, (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-       
-        });
-
-   
-  }
 });
 
 export const { addComment, deleteComment, updateComment } = commentSlice.actions;
