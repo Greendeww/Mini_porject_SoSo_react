@@ -23,13 +23,20 @@ const Comments = () => {
         setReview({ ...review, postId: id, comment: comm });
         console.log(review)
     };
+
+    const postId = review.postId
+
    
     let commentList = comments.filter((comment) => {
         return String(comment.id) === id;
         
+
     });
+    console.log(commentList)
     const payload = {
+
         postId:id,
+
         comment:review.comment
     }
     return (

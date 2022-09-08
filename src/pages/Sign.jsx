@@ -71,11 +71,11 @@ const Sign = () => {
         const passwordConformCurrnet = e.target.value;
         setPasswordConfirm(passwordConformCurrnet)
 
-        if(!passwordConformRegex.test(passwordConformCurrnet)){
-            setPasswordConfirmMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!')
+        if(!password===passwordConfirm){
+            setPasswordConfirmMessage('비밀번호가 틀립니다')
             setIsPasswordConfirm(false);
         }else{
-            setPasswordConfirmMessage('안전한 비밀번호에요!')
+            setPasswordConfirmMessage('비밀번호가 같습니다')
             setIsPasswordConfirm(true);
         }
     }
@@ -142,7 +142,7 @@ const Sign = () => {
                     <p>비밀번호 확인</p>
                     <StInput type="text" placeholder='소문자,숫자,특수문자를 포함한 8자 이상으로 입력해주세요'
                             name='passwordConfirm' value={passwordConfirm} onChange={onChangePasswordConform}/>
-                    {passwordConfirm.length > 0 && <p style={{color:'red'}}>{/*{passwordConfirmMessage}*/}</p>}
+                    {passwordConfirm.length > 0 && <p style={{color:'red'}}>{passwordConfirmMessage}</p>}
                 </StInputBox>
                 <StInputBox>
                 </StInputBox>
